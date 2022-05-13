@@ -27,20 +27,13 @@
 			<plugin>
 				<artifactId>maven-war-plugin</artifactId>
 				<version>3.2.3</version>
-				<configuration>
-						<archive>
-							<manifest>
-								<mainClass>com.narola.pharmacy.ShowCustomerHomeServlet</mainClass>
-							</manifest>
-						</archive>
-				</configuration>
 			</plugin>
 			<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-jar-plugin</artifactId>
-					<version>3.1.0</version>
-					
-				</plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>3.1.0</version>
+
+			</plugin>
 		</plugins>
 	</build>
 	<dependencies>
@@ -49,12 +42,19 @@
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 			<version>${mysqlconnector.version}</version>
+			<scope>runtime</scope>
 		</dependency>
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>
 			<version>${servletapi.version}</version>
 			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.13.2</version>
+			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.httpcomponents</groupId>
@@ -81,7 +81,13 @@
 			<artifactId>jaxb-api</artifactId>
 			<version>${xmlbind.version}</version>
 		</dependency>
-
+		<dependency>
+			<groupId>com.mavenProject</groupId>
+			<artifactId>MavenDemo</artifactId>
+			<version>1.0-SNAPSHOT</version>
+			<scope>system</scope>
+			<systemPath>${user.home}/.m2/repository/com/mavenProject/MavenDemo/1.0-SNAPSHOT/MavenDemo-1.0-SNAPSHOT.jar</systemPath>
+		</dependency>
 
 	</dependencies>
 </project>

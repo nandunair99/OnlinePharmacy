@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.narola.pharmacy.PharmacyDBException;
 import com.narola.pharmacy.utility.Constant;
+import com.narola.pharmacy.utility.DAOFactory;
 
 public class ShowAllMedicineServlet extends HttpServlet {
 	/**
@@ -24,8 +25,9 @@ public class ShowAllMedicineServlet extends HttpServlet {
 			throws ServletException, IOException {
 
 		try {
+			IMedicineDAO medicineDao=DAOFactory.getInstance().getMedicineDAO();
 			System.out.println(getServletContext().getRealPath("/"));
-			List<MedicineBean> list = MedicineDAO.showAllMedicine();
+			List<MedicineBean> list = medicineDao.showAllMedicine();
 			for (MedicineBean medItem : list) {
 				File dir = new File(
 						getServletContext().getRealPath("/") + Constant.MEDICINE_IMG_FOLDER + medItem.getMedId());

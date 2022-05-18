@@ -12,9 +12,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.narola.pharmacy.medicine.IMedicineDAO;
 import com.narola.pharmacy.medicine.MedicineBean;
-import com.narola.pharmacy.medicine.MedicineDAO;
 import com.narola.pharmacy.utility.Constant;
+import com.narola.pharmacy.utility.DAOFactory;
 
 /**
  * Servlet implementation class ShowCustomerMedicineServlet
@@ -58,8 +59,9 @@ public class ShowCustomerMedicineServlet extends HttpServlet {
 		System.out.println(request.getRequestURL()+qry);
 
 		try {
+			IMedicineDAO medicineDAO=DAOFactory.getInstance().getMedicineDAO();
 			Integer medId = Integer.valueOf(request.getParameter("medId"));
-			MedicineBean mb = MedicineDAO.getMedicineById(medId);
+			MedicineBean mb = medicineDAO.getMedicineById(medId);
 			File dir = new File(getServletContext().getRealPath("/") + Constant.MEDICINE_IMG_FOLDER + medId);
 			File[] list = dir.listFiles();
 			List<String> imagesPath = new ArrayList<>(list.length);

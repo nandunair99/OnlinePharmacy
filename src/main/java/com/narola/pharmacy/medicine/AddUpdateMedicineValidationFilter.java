@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.Part;
 
 import com.narola.pharmacy.PharmacyDBException;
+import com.narola.pharmacy.utility.DAOFactory;
 
 /**
  * Servlet Filter implementation class AddUpdateMedicineValidationFilter
@@ -53,6 +54,7 @@ public class AddUpdateMedicineValidationFilter implements Filter {
 			throws IOException, ServletException {
 
 		try {
+			IMedicineDAO medicineDao=DAOFactory.getInstance().getMedicineDAO();
 			boolean status = false;
 			System.out.println("In AddUpdateMedicineValidationFilter...");
 			Integer catId = Integer.valueOf(request.getParameter("categoryName"));
@@ -139,7 +141,7 @@ public class AddUpdateMedicineValidationFilter implements Filter {
 			} else {
 				if (!status) {
 					if (req.getRequestURI().equals(req.getContextPath() + "/AddMedicineAction")) {
-						if (MedicineDAO.medicineIsExist(medName)) {
+						if (medicineDao.medicineIsExist(medName)) {
 							request.setAttribute("errMsg", "Medicine Already exists...");
 							request.setAttribute("MedicineBean", mb);
 							RequestDispatcher rd = request.getRequestDispatcher(formDestination);
@@ -151,7 +153,7 @@ public class AddUpdateMedicineValidationFilter implements Filter {
 						}
 					}
 					if (req.getRequestURI().equals(req.getContextPath() + "/UpdateMedicineAction")) {
-						if (MedicineDAO.medicineIsExist(medName) && (!medName.toLowerCase().equals(MedicineDAO
+						if (medicineDao.medicineIsExist(medName) && (!medName.toLowerCase().equals(medicineDao
 								.getMedicineById(Integer.valueOf(request.getParameter("medId"))).getMedName()))) {
 							request.setAttribute("errMsg", "Medicine Already exists...");
 							request.setAttribute("MedicineBean", mb);

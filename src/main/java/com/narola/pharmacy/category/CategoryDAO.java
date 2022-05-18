@@ -7,8 +7,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import com.narola.pharmacy.PharmacyDBConnection;
+
 import com.narola.pharmacy.PharmacyDBException;
+import com.narola.pharmacy.utility.PharmacyDBConnection;
 
 public class CategoryDAO {
 
@@ -19,7 +20,7 @@ public class CategoryDAO {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		try {
-			Connection con = PharmacyDBConnection.getConnection();
+			Connection con = PharmacyDBConnection.getInstance().getConnection();
 			String sql = "insert into categorytbl(catName,createdOn,UpdatedOn)values(?,now(),now());";
 			ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 			ps.setString(1, catName.toLowerCase());
@@ -45,7 +46,7 @@ public class CategoryDAO {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		try {
-			Connection con = PharmacyDBConnection.getConnection();
+			Connection con = PharmacyDBConnection.getInstance().getConnection();
 			String sql = "select * from medicinetbl where catid=?";
 			ps = con.prepareStatement(sql);
 			ps.setInt(1, catId);
@@ -73,7 +74,7 @@ public class CategoryDAO {
 		try {
 
 			String sql = "select * from categorytbl where catId=?;";
-			Connection con = PharmacyDBConnection.getConnection();
+			Connection con = PharmacyDBConnection.getInstance().getConnection();
 			ps = con.prepareStatement(sql);
 			ps.setInt(1, catId.intValue());
 			rs = ps.executeQuery();
@@ -104,7 +105,7 @@ public class CategoryDAO {
 		PreparedStatement ps = null;
 		try {
 
-			Connection con = PharmacyDBConnection.getConnection();
+			Connection con = PharmacyDBConnection.getInstance().getConnection();
 			String sql = "delete from categorytbl where catId=?";
 			ps = con.prepareStatement(sql);
 			ps.setInt(1, catid.intValue());
@@ -126,7 +127,7 @@ public class CategoryDAO {
 	public static void updateCategory(int catid, String catname) throws PharmacyDBException {
 		PreparedStatement ps = null;
 		try {
-			Connection con = PharmacyDBConnection.getConnection();
+			Connection con = PharmacyDBConnection.getInstance().getConnection();
 			String sql = "update categorytbl set catName=?,updatedOn=now() where catId=?";
 			ps = con.prepareStatement(sql);
 			ps.setString(1, catname.toLowerCase());
@@ -153,7 +154,7 @@ public class CategoryDAO {
 		PreparedStatement ps = null;
 		try {
 
-			Connection con = PharmacyDBConnection.getConnection();
+			Connection con = PharmacyDBConnection.getInstance().getConnection();
 			String sql = "select * from categorytbl where catName =?";
 			ps = con.prepareStatement(sql);
 			ps.setString(1, catName.toLowerCase());
@@ -179,7 +180,7 @@ public class CategoryDAO {
 		Statement st = null;
 		try {
 
-			Connection con = PharmacyDBConnection.getConnection();
+			Connection con = PharmacyDBConnection.getInstance().getConnection();
 			st = con.createStatement();
 			rs = st.executeQuery(sql);
 			while (rs.next()) {
@@ -215,7 +216,7 @@ public class CategoryDAO {
 		ResultSet rs = null;
 		try {
 
-			Connection con = PharmacyDBConnection.getConnection();
+			Connection con = PharmacyDBConnection.getInstance().getConnection();
 
 			ps = con.prepareStatement(sql);
 			ps.setBoolean(1, true);
@@ -250,7 +251,7 @@ public class CategoryDAO {
 		PreparedStatement ps = null;
 		String sql = "update categorytbl set popular=?,updatedOn=now() where catId=?";
 		try {
-			Connection con = PharmacyDBConnection.getConnection();
+			Connection con = PharmacyDBConnection.getInstance().getConnection();
 			ps = con.prepareStatement(sql);
 			ps.setBoolean(1, Boolean.parseBoolean(action));
 			ps.setInt(2, catId);

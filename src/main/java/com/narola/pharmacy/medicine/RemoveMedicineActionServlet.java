@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.narola.pharmacy.PharmacyDBException;
+import com.narola.pharmacy.utility.DAOFactory;
 
 public class RemoveMedicineActionServlet extends HttpServlet {
 
@@ -18,8 +19,9 @@ public class RemoveMedicineActionServlet extends HttpServlet {
 			throws ServletException, IOException {
 
 		try {
+			IMedicineDAO medicineDao=DAOFactory.getInstance().getMedicineDAO();
 			int medId = Integer.valueOf(request.getParameter("medId"));
-			MedicineDAO.deleteMedicine(medId);
+			medicineDao.deleteMedicine(medId);
 			response.sendRedirect("ShowAllMedicine");
 		} catch (PharmacyDBException e) {
 

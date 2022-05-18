@@ -10,10 +10,10 @@ public class TestRunner {
 	      Result result = JUnitCore.runClasses(TestOrderResponseEntity.class);
 			
 	      for (Failure failure : result.getFailures()) {
-	         System.out.println(failure.toString());
+	         System.out.println("failure: "+failure.toString());
 	      }
 			
-	      System.out.println(result.wasSuccessful());
+	      System.out.println("success: "+result.wasSuccessful());
 	   }
 
 }

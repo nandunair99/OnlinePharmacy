@@ -17,6 +17,7 @@ import javax.servlet.http.Part;
 
 import com.narola.pharmacy.PharmacyDBException;
 import com.narola.pharmacy.utility.Constant;
+import com.narola.pharmacy.utility.DAOFactory;
 
 public class UpdateMedicineActionServlet extends HttpServlet {
 
@@ -26,6 +27,7 @@ public class UpdateMedicineActionServlet extends HttpServlet {
 			throws ServletException, IOException {
 
 		try {
+			IMedicineDAO medicineDao=DAOFactory.getInstance().getMedicineDAO();
 			int catId = Integer.valueOf(request.getParameter("categoryName"));
 			String destPath = getServletContext().getRealPath("/") + Constant.MEDICINE_IMG_FOLDER;
 			Integer medId = Integer.valueOf(request.getParameter("medId"));
@@ -110,7 +112,7 @@ public class UpdateMedicineActionServlet extends HttpServlet {
 			mb.setMedMfgDate(medMfgDatetxt);
 			mb.setMedExpDate(medExpDatetxt);
 			mb.setQuantity(quantity);
-			MedicineDAO.updateMedicine(medId, mb);
+			medicineDao.updateMedicine(medId, mb);
 
 			/*
 			 * if (dir.isDirectory()) { File newDir = new File(destPath + medId.toString());

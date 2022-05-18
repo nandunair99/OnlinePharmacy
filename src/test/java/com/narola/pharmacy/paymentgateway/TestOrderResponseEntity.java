@@ -12,7 +12,7 @@ public class TestOrderResponseEntity {
 		String id="21";
 		OrderResponseEntity response=new OrderResponseEntity();
 		response.setId(id);
-		assertEquals(22, response.getId());
+		assertEquals( response.getId(), 21);
 		
 	}
 }

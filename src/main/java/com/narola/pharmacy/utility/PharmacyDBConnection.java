@@ -1,4 +1,4 @@
-package com.narola.pharmacy;
+package com.narola.pharmacy.utility;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -6,6 +6,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+
+import com.narola.pharmacy.PharmacyDBException;
 
 /**
  * @author nnandakrishnan
@@ -15,13 +17,30 @@ import java.sql.Statement;
 
 public class PharmacyDBConnection {
 
-	public static Connection con;
-
-	public static Connection getConnection() throws PharmacyDBException {
+	private static PharmacyDBConnection pharmacyDBConnection=null;
+	private Connection connection;
+	private String url = null;
+	private String username = null;
+	private String password = null;
+	private String dbname = null;
+	
+	private PharmacyDBConnection()
+	{
+		
+	}
+	
+	public static PharmacyDBConnection getInstance() {
+		if (pharmacyDBConnection == null) {
+			pharmacyDBConnection = new PharmacyDBConnection();
+		}
+		return pharmacyDBConnection;
+	}
+	
+	public Connection getConnection() throws PharmacyDBException {
 		try {
-			if (con == null) {
+			if (connection == null) {
 				Class.forName("com.mysql.cj.jdbc.Driver");
-				con = DriverManager.getConnection("jdbc:mysql://localhost:3306/narola", "root", "root");
+				connection = DriverManager.getConnection(getUrl() + "/" + getDbname(), getUsername(), getPassword());
 			}
 		} catch (ClassNotFoundException ex) {
 			throw new PharmacyDBException("Error while connecting DB" + ex);
@@ -29,8 +48,48 @@ public class PharmacyDBConnection {
 			throw new PharmacyDBException("Error while connecting DB" + ex);
 		}
 
-		return con;
+		return connection;
 	}
+	
+	
+
+	public void setConnection(Connection connection) {
+		this.connection = connection;
+	}
+
+	public String getUrl() {
+		return url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public String getDbname() {
+		return dbname;
+	}
+
+	public void setDbname(String dbname) {
+		this.dbname = dbname;
+	}
+
+	
 
 	public static void releaseResource(PreparedStatement preparedStatement) {
 		releaseResource(preparedStatement, null, null);
@@ -48,6 +107,15 @@ public class PharmacyDBConnection {
 		releaseResource(pstatement, resultSet, null);
 	}
 
+	public static PharmacyDBConnection getPharmacyDBConnection() {
+		return pharmacyDBConnection;
+	}
+
+	public static void setPharmacyDBConnection(PharmacyDBConnection pharmacyDBConnection) {
+		PharmacyDBConnection.pharmacyDBConnection = pharmacyDBConnection;
+	}
+
+	
 	public static void releaseResource(PreparedStatement preparedStatement, ResultSet resultSet, Statement statement) {
 		if (preparedStatement != null) {
 			try {

@@ -1,28 +1,26 @@
 package com.narola.pharmacy.medicine;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import java.sql.Date;
 
-import com.narola.pharmacy.PharmacyDBConnection;
 import com.narola.pharmacy.PharmacyDBException;
+import com.narola.pharmacy.utility.PharmacyDBConnection;
 
-public class MedicineDAO {
-	private static Connection con;
-
-	public static int InsertMedicine(MedicineBean mb) throws PharmacyDBException {
+public class MedicineDAOPostgres implements IMedicineDAO{
+	public int InsertMedicine(MedicineBean mb) throws PharmacyDBException {
 
 		String sql = "insert into medicinetbl(catId,medName,medPrice,medManufacturer,medDescription,medMfgDate,medExpDate,quantity,createdOn,updatedOn,discount)values(?,?,?,?,?,?,?,?,now(),now(),?);";
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		int medId = -1;
 		try {
-			con = PharmacyDBConnection.getConnection();
+			Connection con = PharmacyDBConnection.getInstance().getConnection();
 			ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 			ps.setInt(1, mb.getCatId().intValue());
 			ps.setString(2, mb.getMedName().toLowerCase());
@@ -55,13 +53,14 @@ public class MedicineDAO {
 
 	}
 
-	public static List<MedicineBean> searchMedicineByName(String name) throws PharmacyDBException {
-		String sql = "select  md.*, round(md.medPrice-(md.medPrice * md.discount/100)) as 'medDiscoutedPrice' from medicinetbl md where medname like '%" + name + "%'";
+	public List<MedicineBean> searchMedicineByName(String name) throws PharmacyDBException {
+		String sql = "select  md.*, round(md.medPrice-(md.medPrice * md.discount/100)) as 'medDiscoutedPrice' from medicinetbl md where medname like '%"
+				+ name + "%'";
 		List<MedicineBean> list = new ArrayList<>();
 		Statement st = null;
 		ResultSet rs = null;
 		try {
-			con = PharmacyDBConnection.getConnection();
+			Connection con = PharmacyDBConnection.getInstance().getConnection();
 			st = con.createStatement();
 			rs = st.executeQuery(sql);
 			while (rs.next()) {
@@ -94,12 +93,12 @@ public class MedicineDAO {
 
 	}
 
-	public static List<MedicineBean> getMedicineByCatid(Integer catId) throws PharmacyDBException {
+	public List<MedicineBean> getMedicineByCatid(Integer catId) throws PharmacyDBException {
 		List<MedicineBean> list = new ArrayList<>();
 		ResultSet rs = null;
 		PreparedStatement ps = null;
 		try {
-			con = PharmacyDBConnection.getConnection();
+			Connection con = PharmacyDBConnection.getInstance().getConnection();
 			String sql = "select md.*, round(md.medPrice-(md.medPrice * md.discount/100)) as 'medDiscoutedPrice' from medicinetbl md where catid=?";
 
 			ps = con.prepareStatement(sql);
@@ -135,10 +134,10 @@ public class MedicineDAO {
 		return list;
 	}
 
-	public static void updatePictureId(Integer medId) throws PharmacyDBException {
+	public void updatePictureId(Integer medId) throws PharmacyDBException {
 		PreparedStatement ps = null;
 		try {
-			con = PharmacyDBConnection.getConnection();
+			Connection con = PharmacyDBConnection.getInstance().getConnection();
 			String sql = "update medicinetbl set picture=?,updatedOn=now() where medId=?";
 			ps = con.prepareStatement(sql);
 			ps.setInt(1, medId.intValue());
@@ -154,10 +153,10 @@ public class MedicineDAO {
 
 	}
 
-	public static void deleteMedicine(Integer medId) throws PharmacyDBException {
+	public void deleteMedicine(Integer medId) throws PharmacyDBException {
 		PreparedStatement ps = null;
 		try {
-			con = PharmacyDBConnection.getConnection();
+			Connection con = PharmacyDBConnection.getInstance().getConnection();
 			String sql = "delete from medicinetbl where medId=?";
 			ps = con.prepareStatement(sql);
 			ps.setInt(1, medId.intValue());
@@ -172,13 +171,13 @@ public class MedicineDAO {
 
 	}
 
-	public static void updateMedicine(Integer medId, MedicineBean mb) throws PharmacyDBException {
+	public void updateMedicine(Integer medId, MedicineBean mb) throws PharmacyDBException {
 
 		PreparedStatement ps = null;
 		try {
 			String sql = "update medicinetbl set catId=?,medName=?,medPrice=?,medManufacturer=?,medDescription=?,medMfgDate=?,medExpDate=?,quantity=?,updatedOn=now(),discount=? where medId=?";
 
-			con = PharmacyDBConnection.getConnection();
+			Connection con = PharmacyDBConnection.getInstance().getConnection();
 			ps = con.prepareStatement(sql);
 			ps.setInt(1, mb.getCatId().intValue());
 			ps.setString(2, mb.getMedName().toLowerCase());
@@ -209,14 +208,14 @@ public class MedicineDAO {
 
 	}
 
-	public static List<MedicineBean> showAllMedicine() throws PharmacyDBException {
+	public List<MedicineBean> showAllMedicine() throws PharmacyDBException {
 
 		String sql = "select md.*, round(md.medPrice-(md.medPrice * md.discount/100)) as 'medDiscoutedPrice' from medicinetbl md";
 		List<MedicineBean> list = new ArrayList<>();
 		Statement st = null;
 		ResultSet rs = null;
 		try {
-			con = PharmacyDBConnection.getConnection();
+			Connection con = PharmacyDBConnection.getInstance().getConnection();
 			st = con.createStatement();
 			rs = st.executeQuery(sql);
 			while (rs.next()) {
@@ -249,12 +248,12 @@ public class MedicineDAO {
 		return list;
 	}
 
-	public static List<MedicineBean> showDiscountMedicine() throws PharmacyDBException {
+	public List<MedicineBean> showDiscountMedicine() throws PharmacyDBException {
 		Statement st = null;
 		ResultSet rs = null;
 		List<MedicineBean> list = new ArrayList<>();
 		try {
-			con = PharmacyDBConnection.getConnection();
+			Connection con = PharmacyDBConnection.getInstance().getConnection();
 			String sql = "select md.*, round(md.medPrice-(md.medPrice * md.discount/100)) as 'medDiscoutedPrice' from medicinetbl md order by discount desc";
 
 			st = con.createStatement();
@@ -290,14 +289,14 @@ public class MedicineDAO {
 		return list;
 	}
 
-	public static List<MedicineBean> showPopularMedicine() throws PharmacyDBException {
+	public List<MedicineBean> showPopularMedicine() throws PharmacyDBException {
 
 		String sql = "select md.*, round(md.medPrice-(md.medPrice * md.discount/100)) as 'medDiscoutedPrice' from medicinetbl md where popular=?";
 		List<MedicineBean> list = new ArrayList<>();
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		try {
-			con = PharmacyDBConnection.getConnection();
+			Connection con = PharmacyDBConnection.getInstance().getConnection();
 			ps = con.prepareStatement(sql);
 			ps.setBoolean(1, true);
 			rs = ps.executeQuery();
@@ -332,14 +331,14 @@ public class MedicineDAO {
 		return list;
 	}
 
-	public static MedicineBean getMedicineById(Integer medId) throws PharmacyDBException {
+	public MedicineBean getMedicineById(Integer medId) throws PharmacyDBException {
 		MedicineBean mb = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		try {
 			String sql = "select md.*, round(md.medPrice-(md.medPrice * md.discount/100)) as 'medDiscoutedPrice' from medicinetbl as md where medId=?;";
 
-			con = PharmacyDBConnection.getConnection();
+			Connection con = PharmacyDBConnection.getInstance().getConnection();
 			ps = con.prepareStatement(sql);
 			ps.setInt(1, medId.intValue());
 			rs = ps.executeQuery();
@@ -375,13 +374,13 @@ public class MedicineDAO {
 
 	}
 
-	public static boolean medicineIsExist(String medName) throws PharmacyDBException {
+	public boolean medicineIsExist(String medName) throws PharmacyDBException {
 		ResultSet rs = null;
 		PreparedStatement ps = null;
 		boolean status = false;
 		try {
 
-			con = PharmacyDBConnection.getConnection();
+			Connection con = PharmacyDBConnection.getInstance().getConnection();
 			String sql = "select * from medicinetbl where medName =?";
 			ps = con.prepareStatement(sql);
 			ps.setString(1, medName.toLowerCase());
@@ -398,12 +397,12 @@ public class MedicineDAO {
 
 	}
 
-	public static void managePopularity(Integer medId, String action) throws PharmacyDBException {
+	public void managePopularity(Integer medId, String action) throws PharmacyDBException {
 
 		String sql = "update medicinetbl set popular=?,updatedOn=now() where medId=?";
 		PreparedStatement ps = null;
 		try {
-			con = PharmacyDBConnection.getConnection();
+			Connection con = PharmacyDBConnection.getInstance().getConnection();
 			ps = con.prepareStatement(sql);
 			ps.setBoolean(1, Boolean.parseBoolean(action));
 			ps.setInt(2, medId);

@@ -16,6 +16,7 @@ import javax.servlet.http.Part;
 
 import com.narola.pharmacy.PharmacyDBException;
 import com.narola.pharmacy.utility.Constant;
+import com.narola.pharmacy.utility.DAOFactory;
 
 public class AddMedicineActionServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -24,7 +25,7 @@ public class AddMedicineActionServlet extends HttpServlet {
 			throws ServletException, IOException {
 
 		try {
-
+			IMedicineDAO medicineDao=DAOFactory.getInstance().getMedicineDAO();
 			InputStream filecontent = null;
 			MedicineBean mb = new MedicineBean();
 
@@ -37,7 +38,7 @@ public class AddMedicineActionServlet extends HttpServlet {
 			mb.setMedMfgDate(LocalDate.parse(request.getParameter("medMfgDatetxt")));
 			mb.setMedExpDate(LocalDate.parse(request.getParameter("medExpDatetxt")));
 			mb.setQuantity(Integer.valueOf(request.getParameter("quantitytxt")));
-			Integer medId = MedicineDAO.InsertMedicine(mb);// inserting with random name
+			Integer medId = medicineDao.InsertMedicine(mb);// inserting with random name
 
 			String fileName = null;
 			String destPath = getServletContext().getRealPath("/") + Constant.MEDICINE_IMG_FOLDER; // path for project

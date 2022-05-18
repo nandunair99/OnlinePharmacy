@@ -6,11 +6,13 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
+
+import com.narola.pharmacy.medicine.IMedicineDAO;
 import com.narola.pharmacy.medicine.MedicineBean;
-import com.narola.pharmacy.medicine.MedicineDAO;
 import com.narola.pharmacy.test.TestBean;
 import com.narola.pharmacy.test.TestDAO;
 import com.narola.pharmacy.utility.Constant;
+import com.narola.pharmacy.utility.DAOFactory;
 import com.narola.pharmacy.utility.UtilityMethods;
 
 import javax.servlet.RequestDispatcher;
@@ -35,6 +37,7 @@ public class ShowSummaryFormServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession(false);
 		try {
+			IMedicineDAO medicineDAO=DAOFactory.getInstance().getMedicineDAO();
 			Integer medId=null;
 			Integer testId=null;
 			MedicineBean medicineBean=null;
@@ -48,7 +51,7 @@ public class ShowSummaryFormServlet extends HttpServlet {
 				if(request.getParameter("medIdtxt")!=null)
 				{
 					medId=Integer.valueOf(request.getParameter("medIdtxt"));
-					medicineBean=MedicineDAO.getMedicineById(medId);
+					medicineBean=medicineDAO.getMedicineById(medId);
 					File dir = new File(getServletContext().getRealPath("/") + Constant.MEDICINE_IMG_FOLDER
 							+ medicineBean.getMedId());
 					File[] flist = dir.listFiles();

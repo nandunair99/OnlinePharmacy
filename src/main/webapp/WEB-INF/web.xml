@@ -6,10 +6,43 @@
 
 	<welcome-file-list>
 		<welcome-file>ShowCustomerHome</welcome-file>
-
 	</welcome-file-list>
-	
-
+	<context-param>
+		<param-name>MYSQL_dbname</param-name>
+		<param-value>narola</param-value>
+	</context-param>
+	<context-param>
+		<param-name>MYSQL_dburl</param-name>
+		<param-value>jdbc:mysql://localhost:3306</param-value>
+	</context-param>
+	<context-param>
+		<param-name>MYSQL_username</param-name>
+		<param-value>root</param-value>
+	</context-param>
+	<context-param>
+		<param-name>MYSQL_password</param-name>
+		<param-value>root</param-value>
+	</context-param>
+	<context-param>
+		<param-name>POSTGRES_dbname</param-name>
+		<param-value>narola</param-value>
+	</context-param>
+	<context-param>
+		<param-name>POSTGRES_dburl</param-name>
+		<param-value>jdbc:mysql://localhost:3306</param-value>
+	</context-param>
+	<context-param>
+		<param-name>POSTGRES_username</param-name>
+		<param-value>root</param-value>
+	</context-param>
+	<context-param>
+		<param-name>POSTGRES_password</param-name>
+		<param-value>root</param-value>
+	</context-param>
+	<context-param>
+		<param-name>DB-IN-USE</param-name>
+		<param-value>MYSQL</param-value>
+	</context-param>
 
 	<!-- show records -->
 	<servlet>
@@ -303,12 +336,12 @@
 		<filter-class>com.narola.pharmacy.test.UpdateTestValidationFilter
 		</filter-class>
 	</filter>
-	
+
 	<filter-mapping>
 		<filter-name>UpdateTestValidationFilter</filter-name>
 		<url-pattern>/UpdateTestAction</url-pattern>
 	</filter-mapping>
-	
+
 	<!-- show home -->
 	<servlet>
 		<servlet-name>ShowAdminHomeServlet</servlet-name>
@@ -441,220 +474,252 @@
 		<servlet-class>com.narola.pharmacy.test.ManagePopularTestActionServlet
 		</servlet-class>
 	</servlet>
-	
+
 	<servlet-mapping>
 		<servlet-name>ManagePopularTestActionServlet</servlet-name>
 		<url-pattern>/ManagePopularTestAction</url-pattern>
 	</servlet-mapping>
-	
-	
+
+
 	<servlet>
 		<servlet-name>RegisterActionServlet</servlet-name>
-		<servlet-class>com.narola.pharmacy.customer.RegisterActionServlet</servlet-class>
+		<servlet-class>com.narola.pharmacy.customer.RegisterActionServlet
+		</servlet-class>
 	</servlet>
-	
-	
+
+
 	<servlet-mapping>
 		<servlet-name>RegisterActionServlet</servlet-name>
 		<url-pattern>/RegisterAction</url-pattern>
 	</servlet-mapping>
-	
-	
+
+
 	<servlet>
-		
+
 		<servlet-name>RegisterFormServlet</servlet-name>
-		<servlet-class>com.narola.pharmacy.customer.RegisterFormServlet</servlet-class>
+		<servlet-class>com.narola.pharmacy.customer.RegisterFormServlet
+		</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>RegisterFormServlet</servlet-name>
 		<url-pattern>/RegisterForm</url-pattern>
 	</servlet-mapping>
-	
+
 	<filter>
 		<filter-name>RegisterValidationFilter</filter-name>
-		<filter-class>com.narola.pharmacy.customer.RegisterValidationFilter</filter-class>
+		<filter-class>com.narola.pharmacy.customer.RegisterValidationFilter
+		</filter-class>
 	</filter>
-	
+
 	<filter-mapping>
 		<filter-name>RegisterValidationFilter</filter-name>
 		<url-pattern>/RegisterAction</url-pattern>
 	</filter-mapping>
-	
-	
+
+
 	<servlet>
 		<servlet-name>LoginFormServlet</servlet-name>
-		<servlet-class>com.narola.pharmacy.customer.LoginFormServlet</servlet-class>
+		<servlet-class>com.narola.pharmacy.customer.LoginFormServlet
+		</servlet-class>
 	</servlet>
-	
-	
-	
+
+
+
 	<servlet-mapping>
 		<servlet-name>LoginFormServlet</servlet-name>
 		<url-pattern>/LoginForm</url-pattern>
 	</servlet-mapping>
-	
-	
-	
+
+
+
 	<servlet>
 		<servlet-name>LoginActionServlet</servlet-name>
-		<servlet-class>com.narola.pharmacy.customer.LoginActionServlet</servlet-class>
+		<servlet-class>com.narola.pharmacy.customer.LoginActionServlet
+		</servlet-class>
 	</servlet>
-	
-	
+
+
 	<servlet-mapping>
 		<servlet-name>LoginActionServlet</servlet-name>
 		<url-pattern>/LoginAction</url-pattern>
 	</servlet-mapping>
-	
-	
+
+
 	<filter>
-		
+
 		<filter-name>LoginValidationFilter</filter-name>
-		<filter-class>com.narola.pharmacy.customer.LoginValidationFilter</filter-class>
+		<filter-class>com.narola.pharmacy.customer.LoginValidationFilter
+		</filter-class>
 	</filter>
 	<filter-mapping>
 		<filter-name>LoginValidationFilter</filter-name>
 		<url-pattern>/LoginAction</url-pattern>
 	</filter-mapping>
-	
+
 	<servlet>
 		<servlet-name>AddCartActionServlet</servlet-name>
-		<servlet-class>com.narola.pharmacy.customer.AddCartActionServlet</servlet-class>
+		<servlet-class>com.narola.pharmacy.customer.AddCartActionServlet
+		</servlet-class>
 	</servlet>
-	
+
 	<servlet-mapping>
 		<servlet-name>AddCartActionServlet</servlet-name>
 		<url-pattern>/AddCartAction</url-pattern>
 	</servlet-mapping>
-	
-	
+
+
 	<servlet>
 		<servlet-name>LogoutActionServlet</servlet-name>
-		<servlet-class>com.narola.pharmacy.customer.LogoutActionServlet</servlet-class>
+		<servlet-class>com.narola.pharmacy.customer.LogoutActionServlet
+		</servlet-class>
 	</servlet>
-	
+
 	<servlet-mapping>
 		<servlet-name>LogoutActionServlet</servlet-name>
 		<url-pattern>/LogoutAction</url-pattern>
 	</servlet-mapping>
-	
-	
+
+
 	<servlet>
 		<servlet-name>ShowCartFormServlet</servlet-name>
-		<servlet-class>com.narola.pharmacy.customer.ShowCartFormServlet</servlet-class>
+		<servlet-class>com.narola.pharmacy.customer.ShowCartFormServlet
+		</servlet-class>
 	</servlet>
-	
-	
+
+
 	<servlet-mapping>
 		<servlet-name>ShowCartFormServlet</servlet-name>
 		<url-pattern>/ShowCartForm</url-pattern>
 	</servlet-mapping>
-	
-	
-	
+
+
+
 	<servlet>
 		<servlet-name>DeleteCartItemActionServlet</servlet-name>
-		<servlet-class>com.narola.pharmacy.customer.DeleteCartItemActionServlet</servlet-class>
+		<servlet-class>com.narola.pharmacy.customer.DeleteCartItemActionServlet
+		</servlet-class>
 	</servlet>
-	
+
 	<servlet-mapping>
 		<servlet-name>DeleteCartItemActionServlet</servlet-name>
 		<url-pattern>/DeleteCartItemAction</url-pattern>
 	</servlet-mapping>
-	
-	
+
+
 	<servlet>
 		<servlet-name>UpdateCartQuantityActionServlet</servlet-name>
-		<servlet-class>com.narola.pharmacy.customer.UpdateCartQuantityActionServlet</servlet-class>
+		<servlet-class>com.narola.pharmacy.customer.UpdateCartQuantityActionServlet
+		</servlet-class>
 	</servlet>
-	
+
 	<servlet-mapping>
 		<servlet-name>UpdateCartQuantityActionServlet</servlet-name>
 		<url-pattern>/UpdateCartQuantityAction</url-pattern>
 	</servlet-mapping>
-	
-	
+
+
 	<servlet>
 		<description>
 		</description>
 		<display-name>PlaceOrderActionServlet</display-name>
 		<servlet-name>PlaceOrderActionServlet</servlet-name>
-		<servlet-class>com.narola.pharmacy.customer.PlaceOrderActionServlet</servlet-class>
+		<servlet-class>com.narola.pharmacy.customer.PlaceOrderActionServlet
+		</servlet-class>
 	</servlet>
-	
+
 	<servlet-mapping>
 		<servlet-name>PlaceOrderActionServlet</servlet-name>
 		<url-pattern>/PlaceOrderAction</url-pattern>
 	</servlet-mapping>
-	
-	
+
+
 	<servlet>
 		<servlet-name>ShowSummaryFormServlet</servlet-name>
-		<servlet-class>com.narola.pharmacy.customer.ShowSummaryFormServlet</servlet-class>
+		<servlet-class>com.narola.pharmacy.customer.ShowSummaryFormServlet
+		</servlet-class>
 	</servlet>
-	
+
 	<servlet-mapping>
 		<servlet-name>ShowSummaryFormServlet</servlet-name>
 		<url-pattern>/ShowSummaryForm</url-pattern>
 	</servlet-mapping>
-	
-	
-	
+
+
+
 	<servlet>
 		<servlet-name>ShowCheckoutFormServlet</servlet-name>
-		<servlet-class>com.narola.pharmacy.customer.ShowCheckoutFormServlet</servlet-class>
+		<servlet-class>com.narola.pharmacy.customer.ShowCheckoutFormServlet
+		</servlet-class>
 	</servlet>
-	
-	
+
+
 	<servlet-mapping>
 		<servlet-name>ShowCheckoutFormServlet</servlet-name>
 		<url-pattern>/ShowCheckoutForm</url-pattern>
 	</servlet-mapping>
-	
-	
+
+
 	<servlet>
 		<servlet-name>ValidateCustomerPaymentForm</servlet-name>
-		<servlet-class>com.narola.pharmacy.customer.ValidateCustomerPaymentForm</servlet-class>
+		<servlet-class>com.narola.pharmacy.customer.ValidateCustomerPaymentForm
+		</servlet-class>
 	</servlet>
-	
-	
+
+
 	<servlet-mapping>
 		<servlet-name>ValidateCustomerPaymentForm</servlet-name>
 		<url-pattern>/ValidateCustomerPayment</url-pattern>
 	</servlet-mapping>
-	
-	
+
+
 	<servlet>
 		<servlet-name>ShowPastOrdersFormServlet</servlet-name>
-		<servlet-class>com.narola.pharmacy.customer.ShowPastOrdersFormServlet</servlet-class>
+		<servlet-class>com.narola.pharmacy.customer.ShowPastOrdersFormServlet
+		</servlet-class>
 	</servlet>
-	
-	
-	
-	
+
+
+
+
 	<servlet-mapping>
 		<servlet-name>ShowPastOrdersFormServlet</servlet-name>
 		<url-pattern>/ShowPastOrdersForm</url-pattern>
 	</servlet-mapping>
-	
-	
+
+
 	<servlet>
 		<servlet-name>ShowAllOrdersFormServlet</servlet-name>
-		<servlet-class>com.narola.pharmacy.ShowAllOrdersFormServlet</servlet-class>
+		<servlet-class>com.narola.pharmacy.ShowAllOrdersFormServlet
+		</servlet-class>
 	</servlet>
-	
+
 	<servlet-mapping>
 		<servlet-name>ShowAllOrdersFormServlet</servlet-name>
 		<url-pattern>/ShowAllOrdersForm</url-pattern>
 	</servlet-mapping>
-		
+
 	<servlet>
 		<servlet-name>UpdateOrderStatusActionServlet</servlet-name>
-		<servlet-class>com.narola.pharmacy.UpdateOrderStatusActionServlet</servlet-class>
+		<servlet-class>com.narola.pharmacy.UpdateOrderStatusActionServlet
+		</servlet-class>
 	</servlet>
+
 	<servlet-mapping>
 		<servlet-name>UpdateOrderStatusActionServlet</servlet-name>
 		<url-pattern>/UpdateOrderStatusAction</url-pattern>
 	</servlet-mapping>
-	
+
+
+	<servlet>
+		<display-name>GenerateConnectionServlet</display-name>
+		<servlet-name>GenerateConnectionServlet</servlet-name>
+		<servlet-class>com.narola.pharmacy.utility.GenerateConnectionServlet
+		</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>GenerateConnectionServlet</servlet-name>
+		<url-pattern>/GenerateConnection</url-pattern>
+	</servlet-mapping>
+
 </web-app>

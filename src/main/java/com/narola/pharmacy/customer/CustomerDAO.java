@@ -9,13 +9,14 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.narola.pharmacy.PharmacyDBConnection;
 import com.narola.pharmacy.PharmacyDBException;
+import com.narola.pharmacy.medicine.IMedicineDAO;
 import com.narola.pharmacy.medicine.MedicineBean;
-import com.narola.pharmacy.medicine.MedicineDAO;
 import com.narola.pharmacy.test.TestBean;
 import com.narola.pharmacy.test.TestDAO;
 import com.narola.pharmacy.utility.Constant;
+import com.narola.pharmacy.utility.DAOFactory;
+import com.narola.pharmacy.utility.PharmacyDBConnection;
 
 public class CustomerDAO {
 
@@ -27,7 +28,7 @@ public class CustomerDAO {
 		Connection con = null;
 		int userId = -1;
 		try {
-			con = PharmacyDBConnection.getConnection();
+			con = PharmacyDBConnection.getInstance().getConnection();
 			con.setAutoCommit(false);
 			String sql1 = "insert into usertbl(password,isActive,mailId,userType,createdOn,updatedOn)values(?,?,?,?,now(),now())";
 			ps = con.prepareStatement(sql1, Statement.RETURN_GENERATED_KEYS);
@@ -81,7 +82,7 @@ public class CustomerDAO {
 		ResultSet rs = null;
 		Connection con = null;
 		try {
-			con = PharmacyDBConnection.getConnection();
+			con = PharmacyDBConnection.getInstance().getConnection();
 
 			String sql = "update ordertbl set razorpay_orderId=?,updatedOn=now() where orderId=?";
 			ps = con.prepareStatement(sql);
@@ -104,7 +105,7 @@ public class CustomerDAO {
 		ResultSet rs = null;
 		Connection con = null;
 		try {
-			con = PharmacyDBConnection.getConnection();
+			con = PharmacyDBConnection.getInstance().getConnection();
 			if(ErrorField!=null && reason!=null)
 			{
 				String sql = "update transactiontbl set reason=?,errorField=?,updatedOn=now() where orderId=?";
@@ -139,7 +140,7 @@ public class CustomerDAO {
 		ResultSet rs = null;
 		Connection con = null;
 		try {
-			con = PharmacyDBConnection.getConnection();
+			con = PharmacyDBConnection.getInstance().getConnection();
 
 			String sql = "update ordertbl set status=?,updatedOn=now() where orderId=?";
 			ps = con.prepareStatement(sql);
@@ -165,7 +166,7 @@ public class CustomerDAO {
 		Integer orderItemId = null;
 		Connection con = null;
 		try {
-			con = PharmacyDBConnection.getConnection();
+			con = PharmacyDBConnection.getInstance().getConnection();
 			if (cartBean.getMedicineBean() == null && cartBean.getTestBean() == null) // cart is empty
 			{
 				return -1;
@@ -209,7 +210,7 @@ public class CustomerDAO {
 		List<OrderBean> orderBeans = new ArrayList<>();
 
 		try {
-			con = PharmacyDBConnection.getConnection();
+			con = PharmacyDBConnection.getInstance().getConnection();
 			String sql = "select o.* from ordertbl o inner join transactiontbl t on o.orderId=t.orderId where t.status=\"Success\" order by o.date desc";
 			ps = con.prepareStatement(sql);
 			rs = ps.executeQuery();
@@ -239,7 +240,7 @@ public class CustomerDAO {
 		Integer transactionId = null;
 		Connection con = null;
 		try {
-			con = PharmacyDBConnection.getConnection();
+			con = PharmacyDBConnection.getInstance().getConnection();
 			String sql = "insert into transactiontbl(orderId,userId,totalAmount,status,createdOn,updatedOn)values(?,?,?,?,now(),now())";
 			ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 			ps.setInt(1, orderId);
@@ -268,7 +269,8 @@ public class CustomerDAO {
 		ResultSet rs = null;
 		Connection con = null;
 		try {
-			con = PharmacyDBConnection.getConnection();
+			IMedicineDAO medicineDAO=DAOFactory.getInstance().getMedicineDAO();
+			con = PharmacyDBConnection.getInstance().getConnection();
 			con.setAutoCommit(false);
 			String sql = "insert into ordertbl(userId,date,totalAmount,Status,createdOn,updatedOn)values(?,now(),?,?,now(),now())";
 			ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -292,7 +294,7 @@ public class CustomerDAO {
 			} else {
 				CartBean cartBean = new CartBean();
 				if (orderBean.getMedId() != null) {
-					cartBean.setMedicineBean(MedicineDAO.getMedicineById(orderBean.getMedId()));
+					cartBean.setMedicineBean(medicineDAO.getMedicineById(orderBean.getMedId()));
 					TestBean testBean = new TestBean();
 					testBean.setTestId(0);
 					cartBean.setTestBean(testBean);
@@ -340,7 +342,7 @@ public class CustomerDAO {
 		Connection con = null;
 		OrderBean orderBean = new OrderBean();
 		try {
-			con = PharmacyDBConnection.getConnection();
+			con = PharmacyDBConnection.getInstance().getConnection();
 			String sql = "select totalAmount,razorpay_orderId from ordertbl where orderId=?";
 			ps = con.prepareStatement(sql);
 			ps.setInt(1, orderId);
@@ -366,7 +368,7 @@ public class CustomerDAO {
 		CustomerBean cb = new CustomerBean();
 
 		try {
-			con = PharmacyDBConnection.getConnection();
+			con = PharmacyDBConnection.getInstance().getConnection();
 			String sql = "select * from patienttbl as p inner join usertbl as u  on p.userId=u.userId where p.contact=?";
 			ps = con.prepareStatement(sql);
 			ps.setString(1, contactNo);
@@ -399,7 +401,7 @@ public class CustomerDAO {
 		Connection con = null;
 		boolean status = false;
 		try {
-			con = PharmacyDBConnection.getConnection();
+			con = PharmacyDBConnection.getInstance().getConnection();
 			String sql = "select * from patienttbl as p inner join usertbl as u  on p.userId=u.userId where p.contact=? and u.password=?";
 			ps = con.prepareStatement(sql);
 			ps.setString(1, contactNo);
@@ -420,7 +422,7 @@ public class CustomerDAO {
 		Connection con = null;
 		try {
 			String sql = null;
-			con = PharmacyDBConnection.getConnection();
+			con = PharmacyDBConnection.getInstance().getConnection();
 			sql = "delete from carttbl where cartId=?";
 			ps = con.prepareStatement(sql);
 			ps.setInt(1, cartId);
@@ -445,7 +447,7 @@ public class CustomerDAO {
 			String sql = null;
 			String sql2 = null;
 			Integer cartId = null;
-			con = PharmacyDBConnection.getConnection();
+			con = PharmacyDBConnection.getInstance().getConnection();
 			sql2 = "select cartId from carttbl where (medId=? or testId=?) and userId=?";
 			ps2 = con.prepareStatement(sql2);
 			if (medId != null) {
@@ -497,7 +499,7 @@ public class CustomerDAO {
 		Connection con = null;
 		try {
 
-			con = PharmacyDBConnection.getConnection();
+			con = PharmacyDBConnection.getInstance().getConnection();
 			String sql = "update carttbl set quantity=?,updatedOn=now() where cartId=?";
 			ps = con.prepareStatement(sql);
 			ps.setInt(1, quantity);
@@ -520,7 +522,7 @@ public class CustomerDAO {
 		Connection con = null;
 		CartBean cb = new CartBean();
 		try {
-			con = PharmacyDBConnection.getConnection();
+			con = PharmacyDBConnection.getInstance().getConnection();
 			String sql = "select * from carttbl where cartId=?";
 			ps = con.prepareStatement(sql);
 			ps.setInt(1, cartId);
@@ -555,7 +557,7 @@ public class CustomerDAO {
 		Connection con = null;
 		List<OrderBean> pastOrders = new ArrayList<OrderBean>();
 		try {
-			con = PharmacyDBConnection.getConnection();
+			con = PharmacyDBConnection.getInstance().getConnection();
 			String sql = "SELECT o.orderId,o.userId,o.date,t.totalAmount,t.transactionId,o.status as orderStatus ,t.status FROM ordertbl o inner join transactiontbl"
 					+ " t on o.orderId=t.orderId where o.userId=? and t.status=\"Success\" order by t.updatedOn desc";
 			ps = con.prepareStatement(sql);
@@ -591,7 +593,7 @@ public class CustomerDAO {
 		List<CartBean> testlist = new ArrayList<>();
 		CartWrapper cartWrapper = new CartWrapper();
 		try {
-			con = PharmacyDBConnection.getConnection();
+			con = PharmacyDBConnection.getInstance().getConnection();
 			String sql = "select o.orderId,o.userId,m.medId,o.quantity,m.medName,m.medPrice,m.medManufacturer,m.medDescription,round(m.medPrice-(m.medPrice * m.discount/100)) as 'medDiscoutedPrice'  from orderItemtbl o inner join medicinetbl m on o.medId=m.medId where orderId=?";
 
 			String sql2 = "select o.orderId,o.userId,t.testId,o.quantity,t.testName,t.testPrice,t.testDesc,t.testPreparation,t.picture,round(t.testPrice-(t.testPrice * t.discount/100)) as 'testDiscoutedPrice'  from orderItemtbl o inner join testtbl t on o.testId=t.testId where orderId=?";
@@ -655,7 +657,7 @@ public class CustomerDAO {
 		List<CartBean> testlist = new ArrayList<>();
 		CartWrapper cartWrapper = new CartWrapper();
 		try {
-			con = PharmacyDBConnection.getConnection();
+			con = PharmacyDBConnection.getInstance().getConnection();
 			String sql = "select c.cartId,c.userId,c.quantity,m.medId,m.catId,m.medName,m.medPrice,m.medManufacturer,m.medDescription,m.medMfgDate,"
 					+ "m.medExpDate,m.quantity,m.popular,m.discount,round(m.medPrice-(m.medPrice * m.discount/100)) as 'medDiscoutedPrice'"
 					+ " from carttbl c inner join medicinetbl m on c.medId=m.medId where userId=? order by c.updatedOn desc";
@@ -731,7 +733,7 @@ public class CustomerDAO {
 		Connection con = null;
 
 		try {
-			con = PharmacyDBConnection.getConnection();
+			con = PharmacyDBConnection.getInstance().getConnection();
 			String sql = null;
 			if (action.equals("increment")) {
 				sql = "update carttbl set quantity=quantity+1,updatedOn=now() where cartid=? and userId=?";

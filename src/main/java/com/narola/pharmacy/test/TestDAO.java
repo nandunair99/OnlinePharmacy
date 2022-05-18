@@ -8,8 +8,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.narola.pharmacy.PharmacyDBConnection;
 import com.narola.pharmacy.PharmacyDBException;
+import com.narola.pharmacy.utility.PharmacyDBConnection;
 
 public class TestDAO {
 
@@ -20,7 +20,7 @@ public class TestDAO {
 		ResultSet rs = null;
 		int catId = -1;
 		try {
-			con = PharmacyDBConnection.getConnection();
+			con = PharmacyDBConnection.getInstance().getConnection();
 			String sql = "insert into testtbl (testName,testPrice,testDesc,testPreparation,picture,createdOn,updatedOn,discount) values(?,?,?,?,?,now(),now(),?)";
 			ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 			ps.setString(1, tb.getTestName().toLowerCase());
@@ -47,7 +47,7 @@ public class TestDAO {
 	public static void deleteTest(Integer testId) throws PharmacyDBException {
 		PreparedStatement ps = null;
 		try {
-			con = PharmacyDBConnection.getConnection();
+			con = PharmacyDBConnection.getInstance().getConnection();
 			String sql = "delete from testtbl where testId=?";
 
 			ps = con.prepareStatement(sql);
@@ -66,7 +66,7 @@ public class TestDAO {
 	public static void updateTest(Integer testId, TestBean tb) throws PharmacyDBException {
 		PreparedStatement ps = null;
 		try {
-			con = PharmacyDBConnection.getConnection();
+			con = PharmacyDBConnection.getInstance().getConnection();
 
 			if (tb.getPicStream() == null) {
 				String sql = "update testtbl set testName=?,testPrice=?,testDesc=?,testPreparation=?,updatedOn=now(),discount=? where testId=?";
@@ -105,7 +105,7 @@ public class TestDAO {
 		PreparedStatement ps = null;
 		TestBean tb = new TestBean();
 		try {
-			con = PharmacyDBConnection.getConnection();
+			con = PharmacyDBConnection.getInstance().getConnection();
 			String sql = "select td.*, round(td.testPrice-(td.testPrice * td.discount/100)) as 'testDiscoutedPrice' from testtbl td where testId =?";
 			ps = con.prepareStatement(sql);
 			ps.setInt(1, testId);
@@ -138,7 +138,7 @@ public class TestDAO {
 		boolean status = false;
 		try {
 
-			con = PharmacyDBConnection.getConnection();
+			con = PharmacyDBConnection.getInstance().getConnection();
 			String sql = "select * from testtbl where testName =?";
 			ps = con.prepareStatement(sql);
 			ps.setString(1, testName.toLowerCase());
@@ -160,7 +160,7 @@ public class TestDAO {
 		Statement st = null;
 		ResultSet rs = null;
 		try {
-			con = PharmacyDBConnection.getConnection();
+			con = PharmacyDBConnection.getInstance().getConnection();
 			String sql = "select td.*, round(td.testPrice-(td.testPrice * td.discount/100)) as 'testDiscoutedPrice' from testtbl td";
 			st = con.createStatement();
 			rs = st.executeQuery(sql);
@@ -196,7 +196,7 @@ public class TestDAO {
 		Statement st = null;
 		ResultSet rs = null;
 		try {
-			con = PharmacyDBConnection.getConnection();
+			con = PharmacyDBConnection.getInstance().getConnection();
 			String sql = "select td.*, round(td.testPrice-(td.testPrice * td.discount/100)) as 'testDiscoutedPrice' from testtbl td where testname like '%"+name+"%'";
 			st = con.createStatement();
 			rs = st.executeQuery(sql);
@@ -233,7 +233,7 @@ public class TestDAO {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		try {
-			con = PharmacyDBConnection.getConnection();
+			con = PharmacyDBConnection.getInstance().getConnection();
 			String sql = "select td.*, round(td.testPrice-(td.testPrice * td.discount/100)) as 'testDiscoutedPrice' from testtbl td where popular=?";
 			ps = con.prepareStatement(sql);
 			ps.setBoolean(1, true);
@@ -268,7 +268,7 @@ public class TestDAO {
 		String sql = "update testtbl set popular=?,updatedOn=now() where testId=?";
 		PreparedStatement ps = null;
 		try {
-			con = PharmacyDBConnection.getConnection();
+			con = PharmacyDBConnection.getInstance().getConnection();
 			ps = con.prepareStatement(sql);
 			ps.setBoolean(1, Boolean.parseBoolean(action));
 			ps.setInt(2, testId);

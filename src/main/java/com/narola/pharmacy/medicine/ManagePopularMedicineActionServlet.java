@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.narola.pharmacy.PharmacyDBException;
+import com.narola.pharmacy.utility.DAOFactory;
 
 /**
  * Servlet implementation class ManagePopularMedicineActionServlet
@@ -30,9 +31,10 @@ public class ManagePopularMedicineActionServlet extends HttpServlet {
 			throws ServletException, IOException {
 
 		try {
+			IMedicineDAO medicineDao=DAOFactory.getInstance().getMedicineDAO();
 			Integer medId = Integer.valueOf(request.getParameter("medId"));
 			String action = request.getParameter("action");
-			MedicineDAO.managePopularity(medId, action);
+			medicineDao.managePopularity(medId, action);
 		} catch (PharmacyDBException e) {
 
 			e.printStackTrace();

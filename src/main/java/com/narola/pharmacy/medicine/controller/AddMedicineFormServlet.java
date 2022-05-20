@@ -1,4 +1,4 @@
-package com.narola.pharmacy.medicine;
+package com.narola.pharmacy.medicine.controller;
 
 import java.io.IOException;
 

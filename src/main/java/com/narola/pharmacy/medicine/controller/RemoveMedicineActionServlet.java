@@ -1,4 +1,4 @@
-package com.narola.pharmacy.medicine;
+package com.narola.pharmacy.medicine.controller;
 
 import java.io.IOException;
 
@@ -8,8 +8,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.narola.pharmacy.PharmacyDBException;
-import com.narola.pharmacy.utility.DAOFactory;
+import com.narola.pharmacy.PharmacyServiceException;
+import com.narola.pharmacy.medicine.service.IMedicineService;
+import com.narola.pharmacy.utility.Constant;
+import com.narola.pharmacy.utility.ServiceFactory;
 
 public class RemoveMedicineActionServlet extends HttpServlet {
 
@@ -19,14 +21,13 @@ public class RemoveMedicineActionServlet extends HttpServlet {
 			throws ServletException, IOException {
 
 		try {
-			IMedicineDAO medicineDao=DAOFactory.getInstance().getMedicineDAO();
-			int medId = Integer.valueOf(request.getParameter("medId"));
-			medicineDao.deleteMedicine(medId);
+			IMedicineService medicineService = ServiceFactory.getInstance().getMedicineService();
+			int medId = Integer.valueOf(request.getParameter(Constant.CONST_MED_ID));
+			medicineService.deleteMedicine(medId);
 			response.sendRedirect("ShowAllMedicine");
-		} catch (PharmacyDBException e) {
+		} catch (PharmacyServiceException e) {
 
-			e.printStackTrace();
-			request.setAttribute("errMsg", "Error occured while updating");
+			request.setAttribute(Constant.CONST_ERROR_MESSAGE, Constant.ERR_MED_UPDATE);
 			RequestDispatcher rd = request.getRequestDispatcher("medicinemain.jsp");
 			rd.forward(request, response);
 			return;

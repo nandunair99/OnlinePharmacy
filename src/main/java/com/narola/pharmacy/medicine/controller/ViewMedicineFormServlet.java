@@ -1,9 +1,6 @@
-package com.narola.pharmacy.medicine;
+package com.narola.pharmacy.medicine.controller;
 
-import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -11,9 +8,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.narola.pharmacy.PharmacyDBException;
+import com.narola.pharmacy.PharmacyServiceException;
+import com.narola.pharmacy.medicine.model.MedicineBean;
+import com.narola.pharmacy.medicine.service.IMedicineService;
 import com.narola.pharmacy.utility.Constant;
-import com.narola.pharmacy.utility.DAOFactory;
+import com.narola.pharmacy.utility.ServiceFactory;
 
 public class ViewMedicineFormServlet extends HttpServlet {
 
@@ -22,25 +21,17 @@ public class ViewMedicineFormServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		MedicineBean mb;
 		try {
-			IMedicineDAO medicineDao=DAOFactory.getInstance().getMedicineDAO();
+			IMedicineService medicineService = ServiceFactory.getInstance().getMedicineService();
 			Integer medId = Integer.valueOf(request.getParameter("medId"));
-			mb = medicineDao.getMedicineById(medId);
-			File dir = new File(getServletContext().getRealPath("/") + Constant.MEDICINE_IMG_FOLDER + medId);
-			File[] list = dir.listFiles();
-			List<String> imagesPath = new ArrayList<>(list.length);
-			for (int i = 0; i < list.length; i++) {
-				imagesPath.add(request.getContextPath() + Constant.MEDICINE_IMG_FOLDER + medId.toString() + "/"
-						+ list[i].getName());
-			}
-			mb.setImagesPath(imagesPath);
-			request.setAttribute("MedicineBean", mb);
+			MedicineBean mb = medicineService.getMedicine(request,medId);
 			RequestDispatcher rd = request.getRequestDispatcher("viewmedicine.jsp");
+			request.setAttribute("MedicineBean", mb);
 			rd.forward(request, response);
-		} catch (PharmacyDBException e) {
-
-			e.printStackTrace();
+		} catch (PharmacyServiceException e) {
+			request.setAttribute(Constant.CONST_ERROR_MESSAGE, Constant.ERR_MED_GET_ALL_MED);
+			RequestDispatcher rd = request.getRequestDispatcher("medicinemain.jsp");
+			rd.forward(request, response);
 		}
 
 	}

@@ -4,7 +4,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page import="com.narola.pharmacy.test.TestBean"%>
 <%@page import="java.io.File"%>
-<%@ page import="com.narola.pharmacy.medicine.MedicineBean"%>
+<%@ page import="com.narola.pharmacy.medicine.model.MedicineBean"%>
 <%@ page import="com.narola.pharmacy.category.CategoryBean"%>
 <%@ page import="com.narola.pharmacy.category.CategoryDAO"%>
 <%@ page import="java.util.Base64"%>

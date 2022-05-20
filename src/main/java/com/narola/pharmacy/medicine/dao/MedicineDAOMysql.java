@@ -1,4 +1,4 @@
-package com.narola.pharmacy.medicine;
+package com.narola.pharmacy.medicine.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -10,6 +10,7 @@ import java.util.List;
 import java.sql.Date;
 
 import com.narola.pharmacy.PharmacyDBException;
+import com.narola.pharmacy.medicine.model.MedicineBean;
 import com.narola.pharmacy.utility.PharmacyDBConnection;
 
 public class MedicineDAOMysql implements IMedicineDAO {

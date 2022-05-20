@@ -1,7 +1,7 @@
 <%@page import="com.narola.pharmacy.utility.Constant"%>
 <%@ page import="com.narola.pharmacy.category.CategoryDAO"%>
 <%@ page import="com.narola.pharmacy.category.CategoryBean"%>
-<%@ page import="com.narola.pharmacy.medicine.MedicineBean"%>
+<%@ page import="com.narola.pharmacy.medicine.model.MedicineBean"%>
 <%@ page import="java.util.ArrayList"%>
 <%@ page import="java.io.File"%>
 <%@ page import="java.time.LocalDate"%>

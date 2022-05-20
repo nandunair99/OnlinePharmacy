@@ -1,6 +1,6 @@
 package com.narola.pharmacy.customer;
 
-import com.narola.pharmacy.medicine.MedicineBean;
+import com.narola.pharmacy.medicine.model.MedicineBean;
 import com.narola.pharmacy.test.TestBean;
 
 public class CartBean {

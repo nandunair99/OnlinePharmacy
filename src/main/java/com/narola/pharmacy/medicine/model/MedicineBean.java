@@ -1,4 +1,4 @@
-package com.narola.pharmacy.medicine;
+package com.narola.pharmacy.medicine.model;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;

@@ -1,4 +1,4 @@
-package com.narola.pharmacy.medicine;
+package com.narola.pharmacy.medicine.validation;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -11,20 +11,20 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.Part;
-
 import com.narola.pharmacy.PharmacyDBException;
+import com.narola.pharmacy.medicine.dao.IMedicineDAO;
+import com.narola.pharmacy.medicine.model.MedicineBean;
 import com.narola.pharmacy.utility.DAOFactory;
 
 /**
- * Servlet Filter implementation class AddUpdateMedicineValidationFilter
+ * Servlet Filter implementation class UpdateMedicineValidationFilter
  */
-public class AddUpdateMedicineValidationFilter implements Filter {
+public class UpdateMedicineValidationFilter implements Filter {
 
 	/**
 	 * Default constructor.
 	 */
-	public AddUpdateMedicineValidationFilter() {
+	public UpdateMedicineValidationFilter() {
 
 	}
 
@@ -52,11 +52,12 @@ public class AddUpdateMedicineValidationFilter implements Filter {
 	 */
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
+		// pass the request along the filter chain
 
 		try {
 			IMedicineDAO medicineDao=DAOFactory.getInstance().getMedicineDAO();
 			boolean status = false;
-			System.out.println("In AddUpdateMedicineValidationFilter...");
+			System.out.println("In UpdateMedicineValidationFilter...");
 			Integer catId = Integer.valueOf(request.getParameter("categoryName"));
 			String medName = request.getParameter("medNametxt");
 			String medPrice = request.getParameter("medPricetxt");
@@ -68,12 +69,14 @@ public class AddUpdateMedicineValidationFilter implements Filter {
 			String quantity = request.getParameter("quantitytxt");
 			HttpServletRequest req = (HttpServletRequest) request;
 
-			Part part = req.getPart("picturetxt");
-			String fileName = part.getSubmittedFileName();
 			Double medicinePrice = -1.0;
 			Double medicineDiscount = -1.0;
 			LocalDate medicineMfgDate = null;
 			LocalDate medicineExpDate = null;
+
+			System.out
+					.println("referrer: " + req.getContextPath() + "/UpdateMedicineAction" + " " + req.getRequestURI());
+
 			if (!medPrice.equals(null) && !medPrice.equals("")) {
 				if (isNumeric(medPrice)) {
 					if (Double.valueOf(medPrice) >= 0.0)
@@ -92,7 +95,6 @@ public class AddUpdateMedicineValidationFilter implements Filter {
 				} else
 					status = true;
 			}
-
 			if (!medMfgDate.equals(null) && !medMfgDate.equals("")) {
 				medicineMfgDate = LocalDate.parse(medMfgDate);
 			}
@@ -100,7 +102,7 @@ public class AddUpdateMedicineValidationFilter implements Filter {
 				medicineExpDate = LocalDate.parse(medExpDate);
 			}
 			MedicineBean mb = new MedicineBean();
-
+			mb.setMedId(Integer.valueOf(request.getParameter("medId")));
 			mb.setCatId(catId);
 			mb.setMedName(medName);
 			mb.setMedPrice(medicinePrice);
@@ -110,23 +112,7 @@ public class AddUpdateMedicineValidationFilter implements Filter {
 			mb.setMedMfgDate(medicineMfgDate);
 			mb.setMedExpDate(medicineExpDate);
 			mb.setQuantity(Integer.valueOf(quantity));
-			String formDestination = null;
-			if (req.getRequestURI().equals(req.getContextPath() + "/AddMedicineAction")) {
-				formDestination = "/AddMedicineForm";
-			} else if (req.getRequestURI().equals(req.getContextPath() + "/UpdateMedicineAction")) {
-				formDestination = "/UpdateMedicineForm";
-			}
-			System.out.println(req.getRequestURI() + " --------" + req.getContextPath() + "/AddMedicineAction");
-			if (req.getRequestURI().equals(req.getContextPath() + "/AddMedicineAction")) {
-				if (fileName.equals(null) || fileName.equals("")) {
-					request.setAttribute("errMsg", "Please fill all the fields...");
 
-					request.setAttribute("MedicineBean", mb);
-					RequestDispatcher rd = request.getRequestDispatcher(formDestination);
-					rd.forward(request, response);
-					return;
-				}
-			}
 			if (medName.equals(null) || medName.equals("") || medPrice.equals(null) || medPrice.equals("")
 					|| medDiscount.equals(null) || medDiscount.equals("") || medManufacturer.equals(null)
 					|| medManufacturer.equals("") || medDescription.equals(null) || medDescription.equals("")
@@ -136,35 +122,24 @@ public class AddUpdateMedicineValidationFilter implements Filter {
 				request.setAttribute("errMsg", "Please fill all the fields...");
 
 				request.setAttribute("MedicineBean", mb);
-				RequestDispatcher rd = request.getRequestDispatcher(formDestination);
+				RequestDispatcher rd = request.getRequestDispatcher("UpdateMedicineForm");
 				rd.forward(request, response);
 			} else {
 				if (!status) {
-					if (req.getRequestURI().equals(req.getContextPath() + "/AddMedicineAction")) {
-						if (medicineDao.medicineIsExist(medName)) {
-							request.setAttribute("errMsg", "Medicine Already exists...");
-							request.setAttribute("MedicineBean", mb);
-							RequestDispatcher rd = request.getRequestDispatcher(formDestination);
-							rd.forward(request, response);
-						} else {
-							System.out.println("Medicine does not Exist");
-							request.setAttribute("errMsg", "");
-							chain.doFilter(request, response);
-						}
-					}
-					if (req.getRequestURI().equals(req.getContextPath() + "/UpdateMedicineAction")) {
-						if (medicineDao.medicineIsExist(medName) && (!medName.toLowerCase().equals(medicineDao
-								.getMedicineById(Integer.valueOf(request.getParameter("medId"))).getMedName()))) {
-							request.setAttribute("errMsg", "Medicine Already exists...");
-							request.setAttribute("MedicineBean", mb);
-							RequestDispatcher rd = request.getRequestDispatcher(formDestination);
-							rd.forward(request, response);
-						} else {
-							System.out.println("Medicine does not Exist");
+					System.out.println(
+							medicineDao.getMedicineById(Integer.valueOf(request.getParameter("medId"))).getMedName());
+					System.out.println(request.getParameter("medId"));
+					if (medicineDao.medicineIsExist(medName) && (!medName.toLowerCase().equals(medicineDao
+							.getMedicineById(Integer.valueOf(request.getParameter("medId"))).getMedName()))) {
+						request.setAttribute("errMsg", "Medicine Already exists...");
+						request.setAttribute("MedicineBean", mb);
+						RequestDispatcher rd = request.getRequestDispatcher("UpdateMedicineForm");
+						rd.forward(request, response);
+					} else {
+						System.out.println("Medicine does not Exist");
 
-							request.setAttribute("errMsg", "");
-							chain.doFilter(request, response);
-						}
+						request.setAttribute("errMsg", "");
+						chain.doFilter(request, response);
 					}
 				} else {
 					if (!isNumeric(medPrice))
@@ -181,12 +156,11 @@ public class AddUpdateMedicineValidationFilter implements Filter {
 					}
 
 					request.setAttribute("MedicineBean", mb);
-					RequestDispatcher rd = request.getRequestDispatcher(formDestination);
+					RequestDispatcher rd = request.getRequestDispatcher("UpdateMedicineForm");
 					rd.forward(request, response);
 				}
 
 			}
-
 		} catch (PharmacyDBException e) {
 			e.printStackTrace();
 		}
@@ -197,7 +171,7 @@ public class AddUpdateMedicineValidationFilter implements Filter {
 	 * @see Filter#init(FilterConfig)
 	 */
 	public void init(FilterConfig fConfig) throws ServletException {
-
+		// TODO Auto-generated method stub
 	}
 
 }

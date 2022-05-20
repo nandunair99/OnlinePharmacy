@@ -12,8 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.narola.pharmacy.medicine.IMedicineDAO;
-import com.narola.pharmacy.medicine.MedicineBean;
+import com.narola.pharmacy.medicine.dao.IMedicineDAO;
+import com.narola.pharmacy.medicine.model.MedicineBean;
 import com.narola.pharmacy.utility.Constant;
 import com.narola.pharmacy.utility.DAOFactory;
 

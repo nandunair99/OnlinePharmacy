@@ -1,8 +1,9 @@
-package com.narola.pharmacy.medicine;
+package com.narola.pharmacy.medicine.dao;
 
 import java.util.List;
 
 import com.narola.pharmacy.PharmacyDBException;
+import com.narola.pharmacy.medicine.model.MedicineBean;
 
 public interface IMedicineDAO {
 

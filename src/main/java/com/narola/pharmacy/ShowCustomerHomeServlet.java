@@ -16,8 +16,8 @@ import javax.servlet.http.HttpSession;
 
 import com.narola.pharmacy.category.CategoryBean;
 import com.narola.pharmacy.category.CategoryDAO;
-import com.narola.pharmacy.medicine.IMedicineDAO;
-import com.narola.pharmacy.medicine.MedicineBean;
+import com.narola.pharmacy.medicine.dao.IMedicineDAO;
+import com.narola.pharmacy.medicine.model.MedicineBean;
 import com.narola.pharmacy.test.TestBean;
 import com.narola.pharmacy.test.TestDAO;
 import com.narola.pharmacy.utility.Constant;

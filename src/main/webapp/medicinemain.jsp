@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
-<%@ page import="com.narola.pharmacy.medicine.MedicineBean"%>
+<%@ page import="com.narola.pharmacy.medicine.model.MedicineBean"%>
 <%@ page import="com.narola.pharmacy.utility.Constant"%>
 <%@ page import="java.io.OutputStream"%>
 <%@ page import="java.util.ArrayList"%>

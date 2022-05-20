@@ -148,7 +148,7 @@
 	<!-- ShowAllMedicineServlet -->
 	<servlet>
 		<servlet-name>ShowAllMedicineServlet</servlet-name>
-		<servlet-class>com.narola.pharmacy.medicine.ShowAllMedicineServlet
+		<servlet-class>com.narola.pharmacy.medicine.controller.ShowAllMedicineServlet
 		</servlet-class>
 	</servlet>
 	<servlet-mapping>
@@ -160,7 +160,7 @@
 	<!-- add Medicine -->
 	<servlet>
 		<servlet-name>AddMedicineFormServlet</servlet-name>
-		<servlet-class>com.narola.pharmacy.medicine.AddMedicineFormServlet
+		<servlet-class>com.narola.pharmacy.medicine.controller.AddMedicineFormServlet
 		</servlet-class>
 	</servlet>
 	<servlet-mapping>
@@ -170,7 +170,7 @@
 
 	<servlet>
 		<servlet-name>AddMedicineActionServlet</servlet-name>
-		<servlet-class>com.narola.pharmacy.medicine.AddMedicineActionServlet
+		<servlet-class>com.narola.pharmacy.medicine.controller.AddMedicineActionServlet
 		</servlet-class>
 		<multipart-config>
 			<max-file-size>20848820</max-file-size>
@@ -185,12 +185,12 @@
 
 	<filter>
 		<filter-name>AddMedicineValidationFilter</filter-name>
-		<filter-class>com.narola.pharmacy.medicine.AddUpdateMedicineValidationFilter
+		<filter-class>com.narola.pharmacy.medicine.validation.AddUpdateMedicineValidationFilter
 		</filter-class>
 	</filter>
 	<filter>
 		<filter-name>UpdateMedicineValidationFilter</filter-name>
-		<filter-class>com.narola.pharmacy.medicine.AddUpdateMedicineValidationFilter
+		<filter-class>com.narola.pharmacy.medicine.validation.AddUpdateMedicineValidationFilter
 		</filter-class>
 	</filter>
 	<filter-mapping>
@@ -205,7 +205,7 @@
 	<!-- update Medicine -->
 	<servlet>
 		<servlet-name>UpdateMedicineFormServlet</servlet-name>
-		<servlet-class>com.narola.pharmacy.medicine.UpdateMedicineFormServlet
+		<servlet-class>com.narola.pharmacy.medicine.controller.UpdateMedicineFormServlet
 		</servlet-class>
 	</servlet>
 	<servlet-mapping>
@@ -215,7 +215,7 @@
 
 	<servlet>
 		<servlet-name>UpdateMedicineActionServlet</servlet-name>
-		<servlet-class>com.narola.pharmacy.medicine.UpdateMedicineActionServlet
+		<servlet-class>com.narola.pharmacy.medicine.controller.UpdateMedicineActionServlet
 		</servlet-class>
 		<multipart-config>
 			<max-file-size>20848820</max-file-size>
@@ -232,7 +232,7 @@
 
 	<servlet>
 		<servlet-name>RemoveMedicineActionServlet</servlet-name>
-		<servlet-class>com.narola.pharmacy.medicine.RemoveMedicineActionServlet
+		<servlet-class>com.narola.pharmacy.medicine.controller.RemoveMedicineActionServlet
 		</servlet-class>
 		<multipart-config>
 			<max-file-size>20848820</max-file-size>
@@ -248,7 +248,7 @@
 	<!-- View Medicine -->
 	<servlet>
 		<servlet-name>ViewMedicineFormServlet</servlet-name>
-		<servlet-class>com.narola.pharmacy.medicine.ViewMedicineFormServlet
+		<servlet-class>com.narola.pharmacy.medicine.controller.ViewMedicineFormServlet
 		</servlet-class>
 
 	</servlet>
@@ -438,7 +438,7 @@
 
 	<servlet>
 		<servlet-name>ManagePopularMedicineFormServlet</servlet-name>
-		<servlet-class>com.narola.pharmacy.medicine.ManagePopularMedicineFormServlet
+		<servlet-class>com.narola.pharmacy.medicine.controller.ManagePopularMedicineFormServlet
 		</servlet-class>
 	</servlet>
 
@@ -449,7 +449,7 @@
 
 	<servlet>
 		<servlet-name>ManagePopularMedicineActionServlet</servlet-name>
-		<servlet-class>com.narola.pharmacy.medicine.ManagePopularMedicineActionServlet
+		<servlet-class>com.narola.pharmacy.medicine.controller.ManagePopularMedicineActionServlet
 		</servlet-class>
 	</servlet>
 

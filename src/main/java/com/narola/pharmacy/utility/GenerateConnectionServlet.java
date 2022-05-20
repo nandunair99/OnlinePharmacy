@@ -23,6 +23,7 @@ public class GenerateConnectionServlet extends HttpServlet {
 		try {
 			PharmacyDBConnection.getInstance().getConnection();
 			DAOFactory.getInstance().init(dbtype);
+			ServiceFactory.getInstance().init();
 		} catch (Exception e) {
 			 e.printStackTrace();
 		}

@@ -5,7 +5,7 @@
 <%@ page import="java.util.ArrayList"%>
 <%@ page import="java.io.File"%>
 <%@ page import="java.sql.Blob"%>
-<%@ page import="com.narola.pharmacy.test.TestBean"%>
+<%@ page import="com.narola.pharmacy.test.model.TestBean"%>
 <%@ page import="java.util.Base64"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
@@ -61,10 +61,11 @@ img {
 				<th>View</th>
 			</tr>
 			<c:forEach var="tbean" items="${TestList}">
-				
+
 				<tr>
-					
-					<td><img src="data:image/png;base64,${tbean.getBase64String()}"></td>
+
+					<td><img
+						src="data:image/png;base64,${tbean.getBase64String()}"></td>
 					<td>${tbean.getTestId().intValue()}</td>
 					<td>${tbean.getTestName()}</td>
 					<td>${tbean.getTestPrice()}</td>
@@ -86,7 +87,11 @@ img {
 						href="ViewTestForm?testId=${tbean.getTestId()}"><span
 							class="glyphicon glyphicon-eye-open"></span></a></td>
 				</tr>
+
 			</c:forEach>
+			<c:if test="${not empty errMsg}">
+				<h4 style="color: red">${errMsg}</h4>
+			</c:if>
 		</table>
 
 	</div>

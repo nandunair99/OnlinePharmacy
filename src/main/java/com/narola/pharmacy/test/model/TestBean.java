@@ -1,4 +1,4 @@
-package com.narola.pharmacy.test;
+package com.narola.pharmacy.test.model;
 
 import java.io.InputStream;
 import java.time.LocalDateTime;

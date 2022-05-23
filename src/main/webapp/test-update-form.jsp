@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
-<%@ page import="com.narola.pharmacy.test.TestBean"%>
+<%@ page import="com.narola.pharmacy.test.model.TestBean"%>
 <%@ page import="java.util.Base64"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>

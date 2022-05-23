@@ -47,14 +47,13 @@ public class UpdateMedicineActionServlet extends HttpServlet {
 			mb.setMedExpDate(medExpDatetxt);
 			mb.setQuantity(quantity);
 			String imagesToBeDeleted = request.getParameter("imageStringtxt");
-			String fileName=medicineService.updateMedicine(request, mb,imagesToBeDeleted);
+			String fileName = medicineService.updateMedicine(request, mb, imagesToBeDeleted);
 			request.setAttribute("message", fileName + Constant.SUCCESS_FILE_UPLOAD);
 			response.sendRedirect("ShowAllMedicine");
 		} catch (PharmacyServiceException e) {
 			request.setAttribute(Constant.CONST_ERROR_MESSAGE, Constant.ERR_MED_UPDATE);
 			RequestDispatcher rd = request.getRequestDispatcher("medicine-update-form.jsp");
 			rd.forward(request, response);
-			return;
 		}
 
 	}

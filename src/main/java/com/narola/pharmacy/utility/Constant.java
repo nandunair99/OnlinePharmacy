@@ -44,34 +44,47 @@ public class Constant {
 	public static final String TRNS_STATUS_SUCCESS = "Success";
 	public static final String TRNS_STATUS_FAIL = "Fail";
 
-	public static final int ORDER_DEFAULT_QUANTITY=1;
-	public static final String RAZORPAY_KEY_ID="rzp_test_lE5sdzy5xBqJSJ";
-	public static final String RAZORPAY_KEY_SECRET="LLCnm21B6uuja3WaqXdfyTPu";
-	public static final String RAZORPAY_ID_SECRET_BASE64STRING="cnpwX3Rlc3RfbEU1c2R6eTV4QnFKU0o6TExDbm0yMUI2dXVqYTNXYXFYZGZ5VFB1";
-	
-	
-	public static final String CONST_PHARMACY_DB_EXCEPTION_MESSAGE="Pharmacy Database Exception";
-	public static final String CONST_CATEGORY_NAME="categoryName";
-	public static final String CONST_ERROR_MESSAGE="errMsg";
-	public static final String CONST_MED_ID="medId";
-	public static final String CONST_ACTION="action";
-	public static final String SUCCESS_FILE_UPLOAD=": File has been uploaded successfully!";
-	
-	
-	public static final String CTRL_IMAGE_CONTROL="picturetxt";
-	public static final String CTRL_MED_NAME="medNametxt";
-	public static final String CTRL_MED_PRICE="medPricetxt";
-	public static final String CTRL_MED_DISCOUNT="medDiscounttxt";
-	public static final String CTRL_MED_MANUFACTURER="medManufacturertxt";
-	public static final String CTRL_MED_DESCRIPTION="medDescriptiontxt";
-	public static final String CTRL_MED_MFGDATE="medMfgDatetxt";
-	public static final String CTRL_MED_EXPDATE="medExpDatetxt";
-	public static final String CTRL_MED_QUANTITY="quantitytxt";
-	
-	public static final String ERR_MED_INSERT="Error occured while inserting medicine...";
-	public static final String ERR_MED_MANAGE_POPULAR="Error occured while Managing popular medicine...";
-	public static final String ERR_MED_UPDATE="Error occured while updating";
-	public static final String ERR_MED_GET_ALL_MED="Error occured while Getting all medicine...";
-	public static final String ERR_MED_SHOW_UPDATE_FORM="Error occured while Showing update medicine form...";
-	public static final String ERR_SOMETHING_WENT_WRONG="Something went wrong";
+	public static final int ORDER_DEFAULT_QUANTITY = 1;
+	public static final String RAZORPAY_KEY_ID = "rzp_test_lE5sdzy5xBqJSJ";
+	public static final String RAZORPAY_KEY_SECRET = "LLCnm21B6uuja3WaqXdfyTPu";
+	public static final String RAZORPAY_ID_SECRET_BASE64STRING = "cnpwX3Rlc3RfbEU1c2R6eTV4QnFKU0o6TExDbm0yMUI2dXVqYTNXYXFYZGZ5VFB1";
+
+	public static final String CONST_PHARMACY_DB_EXCEPTION_MESSAGE = "Database Error Something went wrong ";
+	public static final String CONST_CATEGORY_NAME = "categoryName";
+	public static final String CONST_ERROR_MESSAGE = "errMsg";
+	public static final String CONST_MED_ID = "medId";
+	public static final String CONST_ACTION = "action";
+	public static final String CONST_TEST_ID = "testId";
+	public static final String CONST_DB_IN_USE = "DB-IN-USE";
+	public static final String SUCCESS_FILE_UPLOAD = ": File has been uploaded successfully!";
+
+	public static final String CTRL_IMAGE_CONTROL = "picturetxt";
+	public static final String CTRL_MED_NAME = "medNametxt";
+	public static final String CTRL_MED_PRICE = "medPricetxt";
+	public static final String CTRL_MED_DISCOUNT = "medDiscounttxt";
+	public static final String CTRL_MED_MANUFACTURER = "medManufacturertxt";
+	public static final String CTRL_MED_DESCRIPTION = "medDescriptiontxt";
+	public static final String CTRL_MED_MFGDATE = "medMfgDatetxt";
+	public static final String CTRL_MED_EXPDATE = "medExpDatetxt";
+	public static final String CTRL_MED_QUANTITY = "quantitytxt";
+
+	public static final String CTRL_TEST_NAME = "testNametxt";
+	public static final String CTRL_TEST_PRICE = "testPricetxt";
+	public static final String CTRL_TEST_DISCOUNT = "testDiscounttxt";
+	public static final String CTRL_TEST_PREPARATION = "testPreparationtxt";
+	public static final String CTRL_TEST_DESCRIPTION = "testDesctxt";
+
+	public static final String ERR_MED_INSERT = "Error occured while inserting medicine...";
+	public static final String ERR_MED_MANAGE_POPULAR = "Error occured while Managing popular medicine...";
+	public static final String ERR_MED_UPDATE = "Error occured while updating";
+	public static final String ERR_MED_GET_ALL_MED = "Error occured while Getting all medicine...";
+	public static final String ERR_MED_SHOW_UPDATE_FORM = "Error occured while Showing update medicine form...";
+	public static final String ERR_SOMETHING_WENT_WRONG = "Something went wrong";
+
+	public static final String ERR_TEST_INSERT = "Error occured while Adding test...";
+	public static final String ERR_TEST_DELETE = "Error occured while removing test...";
+	public static final String ERR_TEST_MANAGE_POPULAR = "Error occured while Managing popular test...";
+	public static final String ERR_TEST_UPDATE = "Error occured while Updating test...";
+	public static final String ERR_TEST_GET_ALL_MED = "Error occured while Getting all test...";
+	public static final String ERR_TEST_SHOW_UPDATE_FORM = "Error occured while Showing update test form...";
 }

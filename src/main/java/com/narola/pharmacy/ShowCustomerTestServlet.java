@@ -11,8 +11,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.narola.pharmacy.test.TestBean;
-import com.narola.pharmacy.test.TestDAO;
+import com.narola.pharmacy.test.dao.ITestDAO;
+import com.narola.pharmacy.test.dao.TestDAOMysql;
+import com.narola.pharmacy.test.model.TestBean;
+import com.narola.pharmacy.utility.DAOFactory;
 
 /**
  * Servlet implementation class ShowCustomerTestServlet
@@ -35,7 +37,7 @@ public class ShowCustomerTestServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		
+		ITestDAO testDao = DAOFactory.getInstance().getTestDAO();
 		HttpSession pageSession=request.getSession(false);
 		if(pageSession==null)
 		{
@@ -59,7 +61,7 @@ public class ShowCustomerTestServlet extends HttpServlet {
 		TestBean tb;
 		try {
 			Integer testId = Integer.valueOf(request.getParameter("testId"));
-			tb = TestDAO.getTestById(testId);
+			tb = testDao.getTestById(testId);
 			ByteArrayOutputStream bos=new ByteArrayOutputStream();
 			final byte[] bytes=new byte[1024];
 			int read=0;

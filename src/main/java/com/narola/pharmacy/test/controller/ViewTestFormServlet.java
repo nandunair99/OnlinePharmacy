@@ -1,7 +1,6 @@
-package com.narola.pharmacy.medicine.controller;
+package com.narola.pharmacy.test.controller;
 
 import java.io.IOException;
-
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -9,12 +8,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.narola.pharmacy.PharmacyServiceException;
-import com.narola.pharmacy.medicine.model.MedicineBean;
-import com.narola.pharmacy.medicine.service.IMedicineService;
+import com.narola.pharmacy.test.model.TestBean;
+import com.narola.pharmacy.test.service.ITestService;
 import com.narola.pharmacy.utility.Constant;
 import com.narola.pharmacy.utility.ServiceFactory;
 
-public class ViewMedicineFormServlet extends HttpServlet {
+public class ViewTestFormServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 
@@ -22,15 +21,15 @@ public class ViewMedicineFormServlet extends HttpServlet {
 			throws ServletException, IOException {
 
 		try {
-			IMedicineService medicineService = ServiceFactory.getInstance().getMedicineService();
-			Integer medId = Integer.valueOf(request.getParameter("medId"));
-			MedicineBean mb = medicineService.getMedicine(request, medId);
-			RequestDispatcher rd = request.getRequestDispatcher("viewmedicine.jsp");
-			request.setAttribute("MedicineBean", mb);
+			ITestService testService = ServiceFactory.getInstance().getTestService();
+			int testId = Integer.valueOf(request.getParameter(Constant.CONST_TEST_ID));
+			TestBean tb = testService.getTestForm(testId);
+			request.setAttribute("TestBean", tb);
+			RequestDispatcher rd = request.getRequestDispatcher("viewtest.jsp");
 			rd.forward(request, response);
 		} catch (PharmacyServiceException e) {
-			request.setAttribute(Constant.CONST_ERROR_MESSAGE, Constant.ERR_MED_GET_ALL_MED);
-			RequestDispatcher rd = request.getRequestDispatcher("medicinemain.jsp");
+			request.setAttribute(Constant.CONST_ERROR_MESSAGE, Constant.ERR_TEST_DELETE);
+			RequestDispatcher rd = request.getRequestDispatcher("ShowAllTest");
 			rd.forward(request, response);
 		}
 

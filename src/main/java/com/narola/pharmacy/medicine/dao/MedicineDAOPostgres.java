@@ -13,7 +13,7 @@ import com.narola.pharmacy.PharmacyDBException;
 import com.narola.pharmacy.medicine.model.MedicineBean;
 import com.narola.pharmacy.utility.PharmacyDBConnection;
 
-public class MedicineDAOPostgres implements IMedicineDAO{
+public class MedicineDAOPostgres implements IMedicineDAO {
 	public int InsertMedicine(MedicineBean mb) throws PharmacyDBException {
 
 		String sql = "insert into medicinetbl(catId,medName,medPrice,medManufacturer,medDescription,medMfgDate,medExpDate,quantity,createdOn,updatedOn,discount)values(?,?,?,?,?,?,?,?,now(),now(),?);";

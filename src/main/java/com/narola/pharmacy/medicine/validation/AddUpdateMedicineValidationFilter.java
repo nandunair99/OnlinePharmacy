@@ -56,7 +56,7 @@ public class AddUpdateMedicineValidationFilter implements Filter {
 			throws IOException, ServletException {
 
 		try {
-			IMedicineDAO medicineDao=DAOFactory.getInstance().getMedicineDAO();
+			IMedicineDAO medicineDao = DAOFactory.getInstance().getMedicineDAO();
 			boolean status = false;
 			System.out.println("In AddUpdateMedicineValidationFilter...");
 			Integer catId = Integer.valueOf(request.getParameter("categoryName"));
@@ -190,6 +190,9 @@ public class AddUpdateMedicineValidationFilter implements Filter {
 			}
 
 		} catch (PharmacyDBException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 

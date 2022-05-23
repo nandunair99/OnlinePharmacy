@@ -8,7 +8,7 @@ import com.narola.pharmacy.PharmacyServiceException;
 import com.narola.pharmacy.medicine.model.MedicineBean;
 
 public interface IMedicineService {
-	
+
 	void addMedicine(MedicineBean mb, HttpServletRequest request) throws PharmacyServiceException;
 
 	void managePopularMedicine(Integer medId, String action) throws PharmacyServiceException;
@@ -17,9 +17,10 @@ public interface IMedicineService {
 
 	List<MedicineBean> getAllMedicine(HttpServletRequest request) throws PharmacyServiceException;
 
-	String updateMedicine(HttpServletRequest request, MedicineBean mb,String imagesToBeDeleted) throws PharmacyServiceException;
+	String updateMedicine(HttpServletRequest request, MedicineBean mb, String imagesToBeDeleted)
+			throws PharmacyServiceException;
 
-	MedicineBean getMedicine(HttpServletRequest request,Integer medId) throws PharmacyServiceException;
+	MedicineBean getMedicine(HttpServletRequest request, Integer medId) throws PharmacyServiceException;
 
 	MedicineBean updateMedicineForm(Integer medId) throws PharmacyServiceException;
 }

@@ -9,8 +9,9 @@ import java.util.List;
 
 import com.narola.pharmacy.medicine.dao.IMedicineDAO;
 import com.narola.pharmacy.medicine.model.MedicineBean;
-import com.narola.pharmacy.test.TestBean;
-import com.narola.pharmacy.test.TestDAO;
+import com.narola.pharmacy.test.dao.ITestDAO;
+import com.narola.pharmacy.test.dao.TestDAOMysql;
+import com.narola.pharmacy.test.model.TestBean;
 import com.narola.pharmacy.utility.Constant;
 import com.narola.pharmacy.utility.DAOFactory;
 import com.narola.pharmacy.utility.UtilityMethods;
@@ -38,6 +39,7 @@ public class ShowSummaryFormServlet extends HttpServlet {
 		HttpSession session = request.getSession(false);
 		try {
 			IMedicineDAO medicineDAO=DAOFactory.getInstance().getMedicineDAO();
+			ITestDAO testDAO=DAOFactory.getInstance().getTestDAO();
 			Integer medId=null;
 			Integer testId=null;
 			MedicineBean medicineBean=null;
@@ -69,7 +71,7 @@ public class ShowSummaryFormServlet extends HttpServlet {
 				else if(request.getParameter("testIdtxt")!=null)
 				{
 					testId=Integer.valueOf(request.getParameter("testIdtxt"));
-					testBean=TestDAO.getTestById(testId);
+					testBean=testDAO.getTestById(testId);
 					ByteArrayOutputStream bos = new ByteArrayOutputStream();
 					final byte[] bytes = new byte[1024];
 					int read = 0;

@@ -2,7 +2,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ page import="com.narola.pharmacy.test.TestBean"%>
+<%@ page import="com.narola.pharmacy.test.model.TestBean"%>
 <%@page import="java.io.File"%>
 <%@ page import="com.narola.pharmacy.medicine.model.MedicineBean"%>
 <%@ page import="com.narola.pharmacy.category.CategoryBean"%>

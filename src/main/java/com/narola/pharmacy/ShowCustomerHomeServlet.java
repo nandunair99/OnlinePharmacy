@@ -18,8 +18,9 @@ import com.narola.pharmacy.category.CategoryBean;
 import com.narola.pharmacy.category.CategoryDAO;
 import com.narola.pharmacy.medicine.dao.IMedicineDAO;
 import com.narola.pharmacy.medicine.model.MedicineBean;
-import com.narola.pharmacy.test.TestBean;
-import com.narola.pharmacy.test.TestDAO;
+import com.narola.pharmacy.test.dao.ITestDAO;
+import com.narola.pharmacy.test.dao.TestDAOMysql;
+import com.narola.pharmacy.test.model.TestBean;
 import com.narola.pharmacy.utility.Constant;
 import com.narola.pharmacy.utility.DAOFactory;
 
@@ -59,7 +60,7 @@ public class ShowCustomerHomeServlet extends HttpServlet {
 			
 		pageSession.setAttribute("currentPage", request.getRequestURL()+qry);
 		
-		
+		ITestDAO testDao = DAOFactory.getInstance().getTestDAO();
 		System.out.println(request.getRequestURL()+qry);
 		try {
 			IMedicineDAO medicineDAO= DAOFactory.getInstance().getMedicineDAO(); 
@@ -67,7 +68,7 @@ public class ShowCustomerHomeServlet extends HttpServlet {
 			request.setAttribute("CategoryList", categoryList);
 			if (request.getParameter("query") == null) {
 				List<MedicineBean> popularMedList = medicineDAO.showPopularMedicine();
-				List<TestBean> popularTestList = TestDAO.showPopularTest();
+				List<TestBean> popularTestList = testDao.showPopularTest();
 				List<CategoryBean> popularCategoryList = CategoryDAO.showPopularCategory();
 				List<MedicineBean> discountMedList = medicineDAO.showDiscountMedicine();
 
@@ -146,7 +147,7 @@ public class ShowCustomerHomeServlet extends HttpServlet {
 					}
 					request.setAttribute("MedicineList", medList);
 					
-					List<TestBean> testList = TestDAO.searchTestByName(searchString);
+					List<TestBean> testList = testDao.searchTestByName(searchString);
 					for(TestBean tbean:testList)
 					{
 						ByteArrayOutputStream bos=new ByteArrayOutputStream();
@@ -163,7 +164,7 @@ public class ShowCustomerHomeServlet extends HttpServlet {
 				}
 				else if (query.equals("test")) // home page must show only tests
 				{
-					List<TestBean> testList = TestDAO.showAllTest();
+					List<TestBean> testList = testDao.showAllTest();
 					for(TestBean tbean:testList)
 					{
 						ByteArrayOutputStream bos=new ByteArrayOutputStream();

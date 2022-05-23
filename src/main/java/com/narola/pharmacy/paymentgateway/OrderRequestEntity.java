@@ -2,11 +2,8 @@ package com.narola.pharmacy.paymentgateway;
 
 public class OrderRequestEntity {
 
-	
 	private double amount;
 	private String currency;
-
-	
 
 	public double getAmount() {
 		return amount;

@@ -20,7 +20,6 @@ public class UpdateMedicineFormServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
 		try {
 			IMedicineService medicineService = ServiceFactory.getInstance().getMedicineService();
 			Integer medId = Integer.valueOf(request.getParameter(Constant.CONST_MED_ID));

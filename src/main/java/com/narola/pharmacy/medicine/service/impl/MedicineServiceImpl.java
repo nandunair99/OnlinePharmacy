@@ -2,17 +2,12 @@ package com.narola.pharmacy.medicine.service.impl;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.Part;
-
 import com.narola.pharmacy.PharmacyDBException;
 import com.narola.pharmacy.PharmacyServiceException;
 import com.narola.pharmacy.medicine.dao.IMedicineDAO;
@@ -26,7 +21,7 @@ public class MedicineServiceImpl implements IMedicineService {
 
 	public void addMedicine(MedicineBean mb, HttpServletRequest request) throws PharmacyServiceException {
 		try {
-			
+
 			IMedicineDAO medicineDao = DAOFactory.getInstance().getMedicineDAO();
 			Integer medId;
 
@@ -37,18 +32,12 @@ public class MedicineServiceImpl implements IMedicineService {
 			File dir = new File(destPath + medId.toString());// making a random named directory
 			dir.mkdir();
 
-			UtilityMethods.writeImagesToFolder(fileName,destPath,request.getParts(),medId);
-			request.setAttribute("message", "File " + fileName + " has uploaded successfully!");
+			UtilityMethods.writeImagesToFolder(fileName, destPath, request.getParts(), medId);
+			request.setAttribute("message", "Files has uploaded successfully!");
 
 		} catch (PharmacyDBException e) {
 			throw new PharmacyServiceException(Constant.CONST_PHARMACY_DB_EXCEPTION_MESSAGE, e);
-		} catch (FileNotFoundException e) {
-			throw new PharmacyServiceException(Constant.ERR_SOMETHING_WENT_WRONG, e);
-		} catch (IOException e) {
-			throw new PharmacyServiceException(Constant.ERR_SOMETHING_WENT_WRONG, e);
-		} catch (ServletException e) {
-			throw new PharmacyServiceException(Constant.ERR_SOMETHING_WENT_WRONG, e);
-		} catch (Exception e) {
+		} catch (IOException | ServletException e) {
 			throw new PharmacyServiceException(Constant.ERR_SOMETHING_WENT_WRONG, e);
 		}
 	}
@@ -60,6 +49,8 @@ public class MedicineServiceImpl implements IMedicineService {
 			medicineDao.managePopularity(medId, action);
 		} catch (PharmacyDBException e) {
 			throw new PharmacyServiceException(Constant.CONST_PHARMACY_DB_EXCEPTION_MESSAGE, e);
+		} catch (Exception e) {
+			throw new PharmacyServiceException(Constant.ERR_SOMETHING_WENT_WRONG, e);
 		}
 	}
 
@@ -70,6 +61,8 @@ public class MedicineServiceImpl implements IMedicineService {
 			medicineDao.deleteMedicine(medId);
 		} catch (PharmacyDBException e) {
 			throw new PharmacyServiceException(Constant.CONST_PHARMACY_DB_EXCEPTION_MESSAGE, e);
+		} catch (Exception e) {
+			throw new PharmacyServiceException(Constant.ERR_SOMETHING_WENT_WRONG, e);
 		}
 	}
 
@@ -95,17 +88,20 @@ public class MedicineServiceImpl implements IMedicineService {
 			return list;
 		} catch (PharmacyDBException e) {
 			throw new PharmacyServiceException(Constant.CONST_PHARMACY_DB_EXCEPTION_MESSAGE, e);
+		} catch (Exception e) {
+			throw new PharmacyServiceException(Constant.ERR_SOMETHING_WENT_WRONG, e);
 		}
 
 	}
 
-	public String updateMedicine(HttpServletRequest request, MedicineBean mb,String imagesToBeDeleted) throws PharmacyServiceException {
+	public String updateMedicine(HttpServletRequest request, MedicineBean mb, String imagesToBeDeleted)
+			throws PharmacyServiceException {
 		String fileName;
 		try {
 			IMedicineDAO medicineDao = DAOFactory.getInstance().getMedicineDAO();
 
 			fileName = request.getPart(Constant.CTRL_IMAGE_CONTROL).getSubmittedFileName();
-			
+
 			String[] listImagesToBeDeleted = imagesToBeDeleted.split(",");
 			List<String> listImagesNotToBeDeleted = new ArrayList<>();
 			String destPath = request.getServletContext().getRealPath("/") + Constant.MEDICINE_IMG_FOLDER;
@@ -126,27 +122,25 @@ public class MedicineServiceImpl implements IMedicineService {
 				}
 
 			}
-			
-			UtilityMethods.writeImagesToFolder(fileName,destPath,request.getParts(),mb.getMedId());
+
+			UtilityMethods.writeImagesToFolder(fileName, destPath, request.getParts(), mb.getMedId());
 
 			medicineDao.updateMedicine(mb.getMedId(), mb);
 			return fileName;
-		} catch (IOException e) {
-			throw new PharmacyServiceException(Constant.ERR_SOMETHING_WENT_WRONG, e);
-		} catch (ServletException e) {
+		} catch (IOException|ServletException e) {
 			throw new PharmacyServiceException(Constant.ERR_SOMETHING_WENT_WRONG, e);
 		} catch (PharmacyDBException e) {
 			throw new PharmacyServiceException(Constant.CONST_PHARMACY_DB_EXCEPTION_MESSAGE, e);
-		}
+		} 
 
 	}
 
-	public MedicineBean getMedicine(HttpServletRequest request,Integer medId) throws PharmacyServiceException {
+	public MedicineBean getMedicine(HttpServletRequest request, Integer medId) throws PharmacyServiceException {
 
 		try {
 			IMedicineDAO medicineDao = DAOFactory.getInstance().getMedicineDAO();
 			MedicineBean mb;
-			
+
 			mb = medicineDao.getMedicineById(medId);
 			File dir = new File(request.getServletContext().getRealPath("/") + Constant.MEDICINE_IMG_FOLDER + medId);
 			File[] list = dir.listFiles();
@@ -160,6 +154,8 @@ public class MedicineServiceImpl implements IMedicineService {
 			return mb;
 		} catch (PharmacyDBException e) {
 			throw new PharmacyServiceException(Constant.CONST_PHARMACY_DB_EXCEPTION_MESSAGE, e);
+		} catch (Exception e) {
+			throw new PharmacyServiceException(Constant.ERR_SOMETHING_WENT_WRONG, e);
 		}
 
 	}
@@ -170,10 +166,11 @@ public class MedicineServiceImpl implements IMedicineService {
 			MedicineBean mb;
 			IMedicineDAO medicineDao = DAOFactory.getInstance().getMedicineDAO();
 			mb = medicineDao.getMedicineById(medId);
-
 			return mb;
 		} catch (PharmacyDBException e) {
 			throw new PharmacyServiceException(Constant.CONST_PHARMACY_DB_EXCEPTION_MESSAGE, e);
+		} catch (Exception e) {
+			throw new PharmacyServiceException(Constant.ERR_SOMETHING_WENT_WRONG, e);
 		}
 
 	}

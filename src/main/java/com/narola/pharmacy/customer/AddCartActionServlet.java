@@ -11,15 +11,11 @@ import javax.servlet.http.HttpSession;
 
 import com.narola.pharmacy.PharmacyDBException;
 
-/**
- * Servlet implementation class AddCartActionServlet
- */
+
 public class AddCartActionServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * @see HttpServlet#HttpServlet()
-	 */
+	
 	public AddCartActionServlet() {
 		super();
 

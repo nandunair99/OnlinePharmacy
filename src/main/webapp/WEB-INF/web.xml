@@ -261,7 +261,7 @@
 	<!-- Add Test -->
 	<servlet>
 		<servlet-name>AddTestFormServlet</servlet-name>
-		<servlet-class>com.narola.pharmacy.test.AddTestFormServlet
+		<servlet-class>com.narola.pharmacy.test.controller.AddTestFormServlet
 		</servlet-class>
 
 	</servlet>
@@ -272,7 +272,7 @@
 
 	<servlet>
 		<servlet-name>AddTestActionServlet</servlet-name>
-		<servlet-class>com.narola.pharmacy.test.AddTestActionServlet
+		<servlet-class>com.narola.pharmacy.test.controller.AddTestActionServlet
 		</servlet-class>
 		<multipart-config>
 			<max-file-size>20848820</max-file-size>
@@ -286,7 +286,7 @@
 	</servlet-mapping>
 	<filter>
 		<filter-name>AddTestValidationFilter</filter-name>
-		<filter-class>com.narola.pharmacy.test.AddTestValidationFilter
+		<filter-class>com.narola.pharmacy.test.validation.AddTestValidationFilter
 		</filter-class>
 	</filter>
 	<filter-mapping>
@@ -295,7 +295,7 @@
 	</filter-mapping>
 	<servlet>
 		<servlet-name>ShowAllTestServlet</servlet-name>
-		<servlet-class>com.narola.pharmacy.test.ShowAllTestServlet
+		<servlet-class>com.narola.pharmacy.test.controller.ShowAllTestServlet
 		</servlet-class>
 
 	</servlet>
@@ -307,7 +307,7 @@
 	<!-- Update test -->
 	<servlet>
 		<servlet-name>UpdateTestFormServlet</servlet-name>
-		<servlet-class>com.narola.pharmacy.test.UpdateTestFormServlet
+		<servlet-class>com.narola.pharmacy.test.controller.UpdateTestFormServlet
 		</servlet-class>
 
 	</servlet>
@@ -318,7 +318,7 @@
 
 	<servlet>
 		<servlet-name>UpdateTestActionServlet</servlet-name>
-		<servlet-class>com.narola.pharmacy.test.UpdateTestActionServlet
+		<servlet-class>com.narola.pharmacy.test.controller.UpdateTestActionServlet
 		</servlet-class>
 		<multipart-config>
 			<max-file-size>20848820</max-file-size>
@@ -333,7 +333,7 @@
 
 	<filter>
 		<filter-name>UpdateTestValidationFilter</filter-name>
-		<filter-class>com.narola.pharmacy.test.UpdateTestValidationFilter
+		<filter-class>com.narola.pharmacy.test.validation.UpdateTestValidationFilter
 		</filter-class>
 	</filter>
 
@@ -356,7 +356,7 @@
 
 	<servlet>
 		<servlet-name>RemoveTestActionServlet</servlet-name>
-		<servlet-class>com.narola.pharmacy.test.RemoveTestActionServlet
+		<servlet-class>com.narola.pharmacy.test.controller.RemoveTestActionServlet
 		</servlet-class>
 
 	</servlet>
@@ -368,7 +368,7 @@
 
 	<servlet>
 		<servlet-name>ViewTestFormServlet</servlet-name>
-		<servlet-class>com.narola.pharmacy.test.ViewTestFormServlet
+		<servlet-class>com.narola.pharmacy.test.controller.ViewTestFormServlet
 		</servlet-class>
 
 	</servlet>

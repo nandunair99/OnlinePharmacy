@@ -1,6 +1,6 @@
 <%@ page import="com.narola.pharmacy.category.CategoryDAO"%>
 <%@ page import="com.narola.pharmacy.category.CategoryBean"%>
-<%@ page import="com.narola.pharmacy.test.TestBean"%>
+<%@ page import="com.narola.pharmacy.test.model.TestBean"%>
 <%@ page import="java.io.File"%>
 <%@ page import="java.util.Base64"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"

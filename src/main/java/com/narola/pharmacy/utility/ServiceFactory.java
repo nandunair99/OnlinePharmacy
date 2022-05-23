@@ -2,13 +2,15 @@ package com.narola.pharmacy.utility;
 
 import com.narola.pharmacy.medicine.service.IMedicineService;
 import com.narola.pharmacy.medicine.service.impl.MedicineServiceImpl;
+import com.narola.pharmacy.test.service.ITestService;
+import com.narola.pharmacy.test.service.impl.TestServiceImpl;
 
 public class ServiceFactory {
 
 	private static ServiceFactory ServiceHelper = null;
 	private IMedicineService medicineService = null;
-	private IMedicineService testService = null;
-	
+	private ITestService testService = null;
+
 	private ServiceFactory() {
 
 	}
@@ -21,17 +23,15 @@ public class ServiceFactory {
 	}
 
 	public IMedicineService getMedicineService() {
-
-		if (medicineService == null) {
-			medicineService = new MedicineServiceImpl();
-		} 
-			return medicineService;
-		
+		return medicineService;
 	}
 
-	
+	public ITestService getTestService() {
+		return testService;
+	}
 
 	public void init() throws Exception {
 		medicineService = new MedicineServiceImpl();
+		testService = new TestServiceImpl();
 	}
 }

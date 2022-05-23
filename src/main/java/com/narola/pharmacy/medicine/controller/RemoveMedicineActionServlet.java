@@ -30,7 +30,6 @@ public class RemoveMedicineActionServlet extends HttpServlet {
 			request.setAttribute(Constant.CONST_ERROR_MESSAGE, Constant.ERR_MED_UPDATE);
 			RequestDispatcher rd = request.getRequestDispatcher("medicinemain.jsp");
 			rd.forward(request, response);
-			return;
 		}
 
 	}

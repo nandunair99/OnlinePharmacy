@@ -12,8 +12,9 @@ import java.util.List;
 import com.narola.pharmacy.PharmacyDBException;
 import com.narola.pharmacy.medicine.dao.IMedicineDAO;
 import com.narola.pharmacy.medicine.model.MedicineBean;
-import com.narola.pharmacy.test.TestBean;
-import com.narola.pharmacy.test.TestDAO;
+import com.narola.pharmacy.test.dao.ITestDAO;
+import com.narola.pharmacy.test.dao.TestDAOMysql;
+import com.narola.pharmacy.test.model.TestBean;
 import com.narola.pharmacy.utility.Constant;
 import com.narola.pharmacy.utility.DAOFactory;
 import com.narola.pharmacy.utility.PharmacyDBConnection;
@@ -270,6 +271,7 @@ public class CustomerDAO {
 		Connection con = null;
 		try {
 			IMedicineDAO medicineDAO=DAOFactory.getInstance().getMedicineDAO();
+			ITestDAO testDAO=DAOFactory.getInstance().getTestDAO();
 			con = PharmacyDBConnection.getInstance().getConnection();
 			con.setAutoCommit(false);
 			String sql = "insert into ordertbl(userId,date,totalAmount,Status,createdOn,updatedOn)values(?,now(),?,?,now(),now())";
@@ -299,7 +301,7 @@ public class CustomerDAO {
 					testBean.setTestId(0);
 					cartBean.setTestBean(testBean);
 				} else if (orderBean.getTestId() != null) {
-					cartBean.setTestBean(TestDAO.getTestById(orderBean.getTestId()));
+					cartBean.setTestBean(testDAO.getTestById(orderBean.getTestId()));
 					MedicineBean medicineBean = new MedicineBean();
 					medicineBean.setMedId(0);
 					cartBean.setMedicineBean(medicineBean);
@@ -325,6 +327,9 @@ public class CustomerDAO {
 				throw new PharmacyDBException("Error occured while rollback insert order item ");
 			}
 			throw e;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		} finally {
 			try {
 				con.setAutoCommit(true);

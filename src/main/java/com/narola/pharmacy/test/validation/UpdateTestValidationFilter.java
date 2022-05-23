@@ -1,4 +1,4 @@
-package com.narola.pharmacy.test;
+package com.narola.pharmacy.test.validation;
 
 import java.io.IOException;
 
@@ -11,6 +11,10 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 
 import com.narola.pharmacy.PharmacyDBException;
+import com.narola.pharmacy.test.dao.ITestDAO;
+import com.narola.pharmacy.test.dao.TestDAOMysql;
+import com.narola.pharmacy.test.model.TestBean;
+import com.narola.pharmacy.utility.DAOFactory;
 
 public class UpdateTestValidationFilter implements Filter {
 
@@ -46,6 +50,7 @@ public class UpdateTestValidationFilter implements Filter {
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
 		try {
+			ITestDAO testDao = DAOFactory.getInstance().getTestDAO();
 			boolean status = false;
 			System.out.println("In updateTestValidationFilter...");
 			String testName = request.getParameter("testNametxt");
@@ -94,8 +99,8 @@ public class UpdateTestValidationFilter implements Filter {
 			} else {
 
 				if (!status) {
-					if (TestDAO.TestIsExist(testName) && (!testName.toLowerCase().equals(
-							TestDAO.getTestById(Integer.valueOf(request.getParameter("testId"))).getTestName()))) {
+					if (testDao.TestIsExist(testName) && (!testName.toLowerCase().equals(
+							testDao.getTestById(Integer.valueOf(request.getParameter("testId"))).getTestName()))) {
 						request.setAttribute("errMsg", "Test Already exists...");
 						RequestDispatcher rd = request.getRequestDispatcher("UpdateTestForm");
 						request.setAttribute("TestBean", tb);

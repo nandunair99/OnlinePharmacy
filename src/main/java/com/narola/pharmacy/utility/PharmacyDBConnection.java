@@ -17,25 +17,24 @@ import com.narola.pharmacy.PharmacyDBException;
 
 public class PharmacyDBConnection {
 
-	private static PharmacyDBConnection pharmacyDBConnection=null;
+	private static PharmacyDBConnection pharmacyDBConnection = null;
 	private Connection connection;
 	private String url = null;
 	private String username = null;
 	private String password = null;
 	private String dbname = null;
-	
-	private PharmacyDBConnection()
-	{
-		
+
+	private PharmacyDBConnection() {
+
 	}
-	
+
 	public static PharmacyDBConnection getInstance() {
 		if (pharmacyDBConnection == null) {
 			pharmacyDBConnection = new PharmacyDBConnection();
 		}
 		return pharmacyDBConnection;
 	}
-	
+
 	public Connection getConnection() throws PharmacyDBException {
 		try {
 			if (connection == null) {
@@ -50,8 +49,6 @@ public class PharmacyDBConnection {
 
 		return connection;
 	}
-	
-	
 
 	public void setConnection(Connection connection) {
 		this.connection = connection;
@@ -89,8 +86,6 @@ public class PharmacyDBConnection {
 		this.dbname = dbname;
 	}
 
-	
-
 	public static void releaseResource(PreparedStatement preparedStatement) {
 		releaseResource(preparedStatement, null, null);
 	}
@@ -115,7 +110,6 @@ public class PharmacyDBConnection {
 		PharmacyDBConnection.pharmacyDBConnection = pharmacyDBConnection;
 	}
 
-	
 	public static void releaseResource(PreparedStatement preparedStatement, ResultSet resultSet, Statement statement) {
 		if (preparedStatement != null) {
 			try {

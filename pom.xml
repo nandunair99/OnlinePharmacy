@@ -88,6 +88,16 @@
 			<scope>system</scope>
 			<systemPath>${user.home}/.m2/repository/com/mavenProject/MavenDemo/1.0-SNAPSHOT/MavenDemo-1.0-SNAPSHOT.jar</systemPath>
 		</dependency>
-
+		<dependency>
+			<groupId>javax.servlet.jsp.jstl</groupId>
+			<artifactId>jstl-api</artifactId>
+			<version>1.2</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.taglibs</groupId>
+			<artifactId>taglibs-standard-impl</artifactId>
+			<version>1.2.1</version>
+			<scope>runtime</scope>
+		</dependency>
 	</dependencies>
 </project>

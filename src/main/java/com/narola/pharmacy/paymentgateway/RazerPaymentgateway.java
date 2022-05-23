@@ -22,8 +22,10 @@ public class RazerPaymentgateway {
 
 	public String createOrder(OrderRequestEntity orderRequestEntity, Integer orderId) {
 		ObjectMapper objectMapper = new ObjectMapper();
-		//OrderResponseEntity orderResponseEntity = new OrderResponseEntity();
-		Map<String, Object> responseMap=new HashMap<>();
+		/**
+		 * OrderResponseEntity orderResponseEntity = new OrderResponseEntity();
+		 */
+		Map<String, Object> responseMap = new HashMap<>();
 		try (CloseableHttpClient httpClient = HttpClients.createDefault();) {
 			HttpPost createOrderRequest = new HttpPost("https://api.razorpay.com/v1/orders");
 			createOrderRequest.addHeader("Content-Type", "application/json");
@@ -32,22 +34,22 @@ public class RazerPaymentgateway {
 			orderRequestEntity.setCurrency(CURRENCY_INR);
 			createOrderRequest.setEntity(new StringEntity(objectMapper.writeValueAsString(orderRequestEntity)));
 			String result = "";
-			
+
 			try (CloseableHttpResponse createOrderResponse = httpClient.execute(createOrderRequest)) {
 				if (createOrderResponse.getStatusLine().getStatusCode() == 200) {
 					result = EntityUtils.toString(createOrderResponse.getEntity());
 					responseMap = objectMapper.readValue(result, new TypeReference<Map<String, Object>>() {
 					});
 					System.out.println(responseMap.get("id"));
-					// orderResponseEntity.setId(responseMap.get("id").toString());
-					
+					/**
+					 * orderResponseEntity.setId(responseMap.get("id").toString());
+					 */
+
 				}
 			}
 		} catch (JsonProcessingException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		return responseMap.get("id").toString();

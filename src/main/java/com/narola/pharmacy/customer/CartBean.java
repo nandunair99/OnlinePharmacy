@@ -1,7 +1,7 @@
 package com.narola.pharmacy.customer;
 
 import com.narola.pharmacy.medicine.model.MedicineBean;
-import com.narola.pharmacy.test.TestBean;
+import com.narola.pharmacy.test.model.TestBean;
 
 public class CartBean {
 	private Integer cartId;

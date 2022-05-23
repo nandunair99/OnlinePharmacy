@@ -1,4 +1,4 @@
-package com.narola.pharmacy.test;
+package com.narola.pharmacy.test.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,13 +9,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.narola.pharmacy.PharmacyDBException;
+import com.narola.pharmacy.test.model.TestBean;
 import com.narola.pharmacy.utility.PharmacyDBConnection;
 
-public class TestDAO {
+public class TestDAOMysql implements ITestDAO {
 
 	private static Connection con;
 
-	public static int InsertTest(TestBean tb) throws PharmacyDBException {
+	public int InsertTest(TestBean tb) throws PharmacyDBException {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		int catId = -1;
@@ -44,7 +45,7 @@ public class TestDAO {
 		return catId;
 	}
 
-	public static void deleteTest(Integer testId) throws PharmacyDBException {
+	public void deleteTest(Integer testId) throws PharmacyDBException {
 		PreparedStatement ps = null;
 		try {
 			con = PharmacyDBConnection.getInstance().getConnection();
@@ -63,7 +64,7 @@ public class TestDAO {
 
 	}
 
-	public static void updateTest(Integer testId, TestBean tb) throws PharmacyDBException {
+	public void updateTest(Integer testId, TestBean tb) throws PharmacyDBException {
 		PreparedStatement ps = null;
 		try {
 			con = PharmacyDBConnection.getInstance().getConnection();
@@ -100,7 +101,7 @@ public class TestDAO {
 
 	}
 
-	public static TestBean getTestById(Integer testId) throws PharmacyDBException {
+	public TestBean getTestById(Integer testId) throws PharmacyDBException {
 		ResultSet rs = null;
 		PreparedStatement ps = null;
 		TestBean tb = new TestBean();
@@ -132,7 +133,7 @@ public class TestDAO {
 		return tb;
 	}
 
-	public static boolean TestIsExist(String testName) throws PharmacyDBException {
+	public boolean TestIsExist(String testName) throws PharmacyDBException {
 		ResultSet rs = null;
 		PreparedStatement ps = null;
 		boolean status = false;
@@ -143,7 +144,7 @@ public class TestDAO {
 			ps = con.prepareStatement(sql);
 			ps.setString(1, testName.toLowerCase());
 			rs = ps.executeQuery();
-			status=rs.next();
+			status = rs.next();
 		} catch (SQLException e) {
 			throw new PharmacyDBException("Error occured while checking if test existst");
 		} catch (PharmacyDBException ex) {
@@ -155,49 +156,13 @@ public class TestDAO {
 
 	}
 
-	public static List<TestBean> showAllTest() throws PharmacyDBException {
+	public List<TestBean> showAllTest() throws PharmacyDBException {
 		List<TestBean> tlist = new ArrayList<>();
 		Statement st = null;
 		ResultSet rs = null;
 		try {
 			con = PharmacyDBConnection.getInstance().getConnection();
-			String sql = "select td.*, round(td.testPrice-(td.testPrice * td.discount/100)) as 'testDiscoutedPrice' from testtbl td";
-			st = con.createStatement();
-			rs = st.executeQuery(sql);
-
-			while (rs.next()) {
-
-				TestBean tb = new TestBean();
-				tb.setTestId(rs.getInt(1));
-				tb.setTestName(rs.getString(2));
-				tb.setTestPrice(rs.getDouble(3));
-				tb.setTestDescription(rs.getString(4));
-				tb.setTestPreparation(rs.getString(5));
-				tb.setPicStream(rs.getBinaryStream(6));
-				tb.setPopular(rs.getBoolean(9));
-				tb.setTestDiscount(rs.getDouble(10));
-				tb.setTestDiscountedPrice(rs.getDouble(11));
-				tlist.add(tb);
-
-			}
-
-		} catch (SQLException e) {
-			throw new PharmacyDBException("Error occured while displaying all test");
-		} catch (PharmacyDBException ex) {
-			throw ex;
-		} finally {
-			PharmacyDBConnection.releaseResource(st, rs);
-		}
-		return tlist;
-	}
-	
-	public static List<TestBean> searchTestByName(String name) throws PharmacyDBException {
-		List<TestBean> tlist = new ArrayList<>();
-		Statement st = null;
-		ResultSet rs = null;
-		try {
-			con = PharmacyDBConnection.getInstance().getConnection();
-			String sql = "select td.*, round(td.testPrice-(td.testPrice * td.discount/100)) as 'testDiscoutedPrice' from testtbl td where testname like '%"+name+"%'";
+			String sql = "select td.*, round(td.testPrice-(td.testPrice * td.discount/100)) as 'testDiscoutedPrice' from tessttbl td";
 			st = con.createStatement();
 			rs = st.executeQuery(sql);
 
@@ -227,8 +192,44 @@ public class TestDAO {
 		return tlist;
 	}
 
+	public List<TestBean> searchTestByName(String name) throws PharmacyDBException {
+		List<TestBean> tlist = new ArrayList<>();
+		Statement st = null;
+		ResultSet rs = null;
+		try {
+			con = PharmacyDBConnection.getInstance().getConnection();
+			String sql = "select td.*, round(td.testPrice-(td.testPrice * td.discount/100)) as 'testDiscoutedPrice' from testtbl td where testname like '%"
+					+ name + "%'";
+			st = con.createStatement();
+			rs = st.executeQuery(sql);
 
-	public static List<TestBean> showPopularTest() throws PharmacyDBException {
+			while (rs.next()) {
+
+				TestBean tb = new TestBean();
+				tb.setTestId(rs.getInt(1));
+				tb.setTestName(rs.getString(2));
+				tb.setTestPrice(rs.getDouble(3));
+				tb.setTestDescription(rs.getString(4));
+				tb.setTestPreparation(rs.getString(5));
+				tb.setPicStream(rs.getBinaryStream(6));
+				tb.setPopular(rs.getBoolean(9));
+				tb.setTestDiscount(rs.getDouble(10));
+				tb.setTestDiscountedPrice(rs.getDouble(11));
+				tlist.add(tb);
+
+			}
+
+		} catch (SQLException e) {
+			throw new PharmacyDBException("Error occured while displaying all test");
+		} catch (PharmacyDBException ex) {
+			throw ex;
+		} finally {
+			PharmacyDBConnection.releaseResource(st, rs);
+		}
+		return tlist;
+	}
+
+	public List<TestBean> showPopularTest() throws PharmacyDBException {
 		List<TestBean> tlist = new ArrayList<>();
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -264,7 +265,7 @@ public class TestDAO {
 		return tlist;
 	}
 
-	public static void managePopularity(Integer testId, String action) throws PharmacyDBException {
+	public void managePopularity(Integer testId, String action) throws PharmacyDBException {
 		String sql = "update testtbl set popular=?,updatedOn=now() where testId=?";
 		PreparedStatement ps = null;
 		try {
